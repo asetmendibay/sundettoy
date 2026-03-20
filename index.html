@@ -9,222 +9,225 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:           #FDF6EC;
-    --gold:         #B8922A;
-    --gold-light:   #D4A843;
-    --text:         #2A1A00;
-    --text-soft:    rgba(42,26,0,0.5);
-    --glass:        rgba(220,195,155,0.38);
-    --glass-border: rgba(184,146,42,0.22);
-    --radius:       22px;
+    --gold:        #B8922A;
+    --gold-lt:     #D4A843;
+    --text:        #2C1A00;
+    --text-soft:   rgba(44,26,0,0.48);
+    --card:        rgba(255,252,246,0.68);
+    --card-inner:  rgba(200,160,80,0.18);
+    --border:      rgba(184,146,42,0.18);
+    --r:           22px;
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
 
+  /* Тёплый градиент — ключ к работающему glassmorphism */
   body {
-    background: var(--bg);
+    background: linear-gradient(168deg, #FFFAF0 0%, #F7E4B8 55%, #EED49A 100%);
+    background-attachment: fixed;
     color: var(--text);
     font-family: 'Montserrat', system-ui, sans-serif;
     max-width: 430px;
     margin: 0 auto;
     overflow-x: hidden;
+    min-height: 100svh;
   }
 
-  /* ─── TOP ORNAMENT — в потоке, позади контента ─── */
-  .top-orn {
-    width: 100%;
-    height: 70px;          /* больше чем раньше (было 48px) */
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    position: relative;
-    z-index: 0;
-  }
-
-  /* весь контент поверх орнамента */
-  .hero, .sec, .date-sec, .footer { position: relative; z-index: 1; }
-
-  /* ─── GLASS CARD — отдельные заметные блоки ─── */
+  /* ── GLASS CARD ── */
   .card {
-    background: var(--glass);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius);
+    background: var(--card);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
     margin: 0 16px;
   }
 
-  /* ─── MUSIC BTN ─── */
-  #music-btn {
-    position: fixed; right: 16px; bottom: 24px;
-    display: flex; align-items: center; gap: 8px;
-    padding: 10px 18px 10px 14px;
-    background: linear-gradient(135deg, var(--gold-light), var(--gold));
-    border: none; border-radius: 100px; cursor: pointer; z-index: 999;
-    box-shadow: 0 4px 20px rgba(184,146,42,.45);
-    animation: pulse 2.5s ease-in-out infinite;
-    transition: background .25s;
-  }
-  #music-btn.playing { background: linear-gradient(135deg, #8B7355, #A0835D); animation: none; }
-  #music-btn svg { width:22px; height:22px; fill:#fff; flex-shrink:0; }
-  #music-btn .btn-label { font-size:13px; font-weight:600; color:#fff; letter-spacing:.5px; }
-  @keyframes pulse {
-    0%,100% { box-shadow: 0 4px 20px rgba(184,146,42,.45), 0 0 0 0 rgba(184,146,42,.2); }
-    50%      { box-shadow: 0 4px 20px rgba(184,146,42,.45), 0 0 0 14px rgba(184,146,42,0); }
-  }
-
-  /* ─── REVEAL ─── */
-  .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  /* ── REVEAL ── */
+  .reveal { opacity:0; transform:translateY(22px); transition:opacity .7s ease,transform .7s ease; }
   .reveal.visible { opacity:1; transform:none; }
 
-  /* ─── HERO — большой стеклянный блок (жёлтый контур на скрине) ─── */
-  .hero { padding: 20px 16px 40px; }
+  /* ══════════════════════════════
+     ORNAMENT TOP
+  ══════════════════════════════ */
+  .top-orn {
+    width: 100%;
+    height: 64px;
+    object-fit: cover;
+    display: block;
+    /* нет position:fixed — в потоке страницы, z-index:0 */
+  }
 
+  /* ══════════════════════════════
+     MUSIC BUTTON
+  ══════════════════════════════ */
+  #music-btn {
+    position: fixed; right:16px; bottom:24px; z-index:999;
+    display: flex; align-items:center; gap:8px;
+    padding: 11px 20px 11px 14px;
+    background: linear-gradient(135deg, var(--gold-lt), var(--gold));
+    border: none; border-radius: 100px; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(184,146,42,.45);
+    animation: pulse 2.5s ease-in-out infinite;
+    transition: background .3s;
+  }
+  #music-btn.playing { background: linear-gradient(135deg,#7a6040,#5a4020); animation:none; }
+  /* правильная нота — filled music note */
+  #music-btn svg { width:20px; height:20px; fill:#fff; flex-shrink:0; }
+  #music-btn span { font-size:13px; font-weight:600; color:#fff; letter-spacing:.3px; }
+  @keyframes pulse {
+    0%,100% { box-shadow:0 4px 20px rgba(184,146,42,.45),0 0 0 0 rgba(184,146,42,.2); }
+    50%      { box-shadow:0 4px 20px rgba(184,146,42,.45),0 0 0 14px rgba(184,146,42,0); }
+  }
+
+  /* ══════════════════════════════
+     HERO
+  ══════════════════════════════ */
+  .hero { padding: 20px 16px 28px; }
   .hero-card {
-    /* используем .card но без margin, задаём своим */
-    background: var(--glass);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius);
-    padding: 40px 24px 36px;
-    display: flex; flex-direction: column; align-items: center; text-align: center;
-    gap: 0;
+    background: var(--card);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 44px 28px 40px;
+    text-align: center;
+    display: flex; flex-direction:column; align-items:center;
   }
-
   .hero-medallion {
-    width: 100px; height: 100px; object-fit: contain;
-    margin-bottom: 20px;
+    width: 96px; height: 96px; object-fit:contain;
+    margin-bottom: 24px;
     animation: float 4s ease-in-out infinite;
-    filter: drop-shadow(0 6px 18px rgba(184,146,42,.2));
+    filter: drop-shadow(0 6px 16px rgba(184,146,42,.22));
   }
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
-  /* ИСПРАВЛЕН шрифт — убрал letter-spacing -1px, поднял line-height */
   .hero-title {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 62px;
+    font-size: 60px;
     font-weight: 900;
-    line-height: 1.05;        /* было .95 — буквы перекрывались */
-    letter-spacing: 2px;      /* было -1px — убираю наезд букв */
+    line-height: 1.08;
+    letter-spacing: 3px;
     color: var(--gold);
-    margin-bottom: 16px;
-    text-shadow: 0 2px 20px rgba(184,146,42,.12);
+    margin-bottom: 14px;
+    text-shadow: 0 2px 18px rgba(184,146,42,.1);
   }
   .hero-names {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 21px; font-weight: 700;
-    color: var(--text);
+    font-size: 20px; font-weight: 700;
+    color: var(--text); line-height: 1.4;
   }
-  @keyframes fadeup { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
 
-  /* ─── SECTION ─── */
+  /* ══════════════════════════════
+     SECTIONS
+  ══════════════════════════════ */
   .sec { padding: 24px 0; }
+
   .sec-title {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 22px; font-weight: 700;
-    color: var(--gold); text-align: center; margin-bottom: 14px;
+    font-size: 22px; font-weight: 700; color: var(--gold);
+    text-align: center; margin-bottom: 14px;
   }
 
-  /* ─── INVITATION ─── */
+  /* INVITATION */
   .inv-card { padding: 26px 22px; }
   .inv-lead {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 17px; font-weight: 700;
-    color: var(--gold); margin-bottom: 14px; line-height: 1.4;
+    font-size: 17px; font-weight: 700; color: var(--gold);
+    margin-bottom: 14px; line-height: 1.4;
   }
-  .inv-body { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .inv-body { font-size: 14.5px; line-height: 1.85; color: var(--text); }
   .inv-body p { margin-bottom: 10px; }
   .inv-body p:last-child { margin-bottom: 0; }
 
-  /* ─── ILLUSTRATION ─── */
-  .illus-wrap {
-    margin: 0 16px; border-radius: 18px;
-    overflow: hidden; box-shadow: 0 10px 32px rgba(42,26,0,.1);
-  }
+  /* ILLUSTRATION */
+  .illus-wrap { margin:0 16px; border-radius:18px; overflow:hidden; box-shadow:0 10px 30px rgba(44,26,0,.1); }
   .illus-wrap img { width:100%; display:block; }
 
-  /* ─── FAMILY ─── */
+  /* FAMILY */
   .fam-card { padding: 22px; }
-  .fam-grid { display: grid; grid-template-columns: 1fr 1fr; }
-  .fam-col { padding: 12px; }
-  .fam-col:first-child { border-right: 1px solid var(--glass-border); }
+  .fam-grid { display:grid; grid-template-columns:1fr 1fr; }
+  .fam-col { padding: 12px 14px; }
+  .fam-col:first-child { border-right: 1px solid var(--border); }
   .fam-role { font-size:9px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:var(--text-soft); margin-bottom:8px; }
-  .fam-name { font-family:'Playfair Display',Georgia,serif; font-size:19px; font-weight:700; color:var(--gold); line-height:1.45; }
-  .fam-div { height:1px; background:var(--glass-border); margin:14px 0; }
-  .fam-quote { font-size:13px; font-style:italic; color:var(--text-soft); text-align:center; line-height:1.75; }
+  .fam-name { font-family:'Playfair Display',Georgia,serif; font-size:19px; font-weight:700; color:var(--gold); line-height:1.4; }
+  .fam-div { height:1px; background:var(--border); margin:14px 0; }
+  .fam-quote { font-size:13px; font-style:italic; color:var(--text-soft); text-align:center; line-height:1.7; }
 
-  /* ─── DATE ─── */
-  .date-sec { padding: 48px 24px; text-align: center; position: relative; }
-  .date-sec::before {
-    content:''; position:absolute; inset:0;
-    background: radial-gradient(ellipse at 50% 40%, rgba(184,146,42,.07) 0%, transparent 65%);
-    pointer-events: none;
+  /* DATE */
+  .date-sec { padding:52px 24px 44px; text-align:center; }
+  .date-num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 104px; font-weight:900; line-height:1;
+    color: var(--gold); letter-spacing:-3px;
+    text-shadow: 0 3px 24px rgba(184,146,42,.18);
   }
-  .date-num { font-family:'Playfair Display',Georgia,serif; font-size:108px; font-weight:900; line-height:.95; color:var(--gold); letter-spacing:-3px; text-shadow:0 4px 28px rgba(184,146,42,.15); }
-  .date-month { font-size:16px; font-weight:600; letter-spacing:9px; color:var(--gold); text-transform:uppercase; margin:4px 0; }
-  .date-year { font-size:13px; letter-spacing:6px; color:var(--gold-light); opacity:.8; margin-bottom:18px; }
-  .date-time { font-family:'Playfair Display',Georgia,serif; font-size:56px; font-weight:700; color:var(--text); letter-spacing:2px; }
-  .date-sub { font-size:10px; font-weight:500; letter-spacing:3px; color:var(--text-soft); text-transform:uppercase; margin-top:6px; }
+  .date-month { font-size:15px; font-weight:600; letter-spacing:9px; color:var(--gold); text-transform:uppercase; margin:6px 0 2px; }
+  .date-year  { font-size:13px; letter-spacing:6px; color:var(--gold-lt); margin-bottom:22px; }
+  .date-time  { font-family:'Playfair Display',Georgia,serif; font-size:54px; font-weight:700; color:var(--text); letter-spacing:2px; }
+  .date-sub   { font-size:9px; font-weight:600; letter-spacing:3px; color:var(--text-soft); text-transform:uppercase; margin-top:6px; }
 
-  /* ─── COUNTDOWN — отдельные карточки как на 4-м скрине ─── */
-  .cd-card { padding: 16px; }
+  /* COUNTDOWN */
+  .cd-wrap { padding: 14px; }
   .cd-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .cd-block {
-    background: rgba(220,195,155,0.55);   /* чуть насыщеннее фона = эффект стекла */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px; padding: 18px 10px; text-align: center;
+    background: var(--card-inner);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding:20px 12px; text-align:center;
   }
   .cd-num { font-family:'Playfair Display',Georgia,serif; font-size:46px; font-weight:900; color:var(--gold); line-height:1; display:block; }
-  .cd-lbl { font-size:10px; font-weight:500; letter-spacing:2px; color:var(--text-soft); text-transform:uppercase; margin-top:6px; }
-  .cd-num.flip { animation:flip .35s ease; }
-  @keyframes flip { from{transform:translateY(-8px);opacity:.2} to{transform:none;opacity:1} }
+  .cd-lbl { font-size:9px; font-weight:600; letter-spacing:2.5px; color:var(--text-soft); text-transform:uppercase; margin-top:6px; }
+  .cd-num.flip { animation:flip .3s ease; }
+  @keyframes flip { from{transform:translateY(-7px);opacity:.2} to{transform:none;opacity:1} }
 
-  /* ─── CALENDAR ─── */
-  .cal-card { padding: 18px 14px; }
+  /* CALENDAR */
+  .cal-wrap { padding: 18px 14px; }
   .cal-hd { font-family:'Playfair Display',Georgia,serif; font-size:15px; font-weight:700; color:var(--gold); text-align:center; letter-spacing:3px; margin-bottom:16px; }
   .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
-  .cal-dn { font-size:9px; font-weight:600; letter-spacing:1px; color:var(--text-soft); text-align:center; padding:4px 0 10px; text-transform:uppercase; }
+  .cal-dn { font-size:9px; font-weight:600; letter-spacing:.5px; color:var(--text-soft); text-align:center; padding:4px 0 10px; text-transform:uppercase; }
   .cal-d { aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--text); border-radius:50%; }
-  .cal-d.hi { background:linear-gradient(135deg,var(--gold-light),var(--gold)); color:#fff; font-weight:700; font-family:'Playfair Display',serif; box-shadow:0 4px 14px rgba(184,146,42,.3); }
+  .cal-d.hi { background:linear-gradient(135deg,var(--gold-lt),var(--gold)); color:#fff; font-weight:700; box-shadow:0 3px 12px rgba(184,146,42,.35); }
 
-  /* ─── BUTTON ─── */
+  /* BUTTONS */
   .btn {
     display:block; width:calc(100% - 32px); margin:12px 16px 0; padding:15px;
-    background:linear-gradient(135deg,var(--gold-light),var(--gold));
+    background:linear-gradient(135deg,var(--gold-lt),var(--gold));
     color:#fff; font-family:'Montserrat',sans-serif;
-    font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
     border:none; border-radius:100px; cursor:pointer; text-align:center; text-decoration:none;
-    box-shadow:0 6px 20px rgba(184,146,42,.22); transition:transform .2s;
+    box-shadow:0 5px 18px rgba(184,146,42,.28); transition:transform .2s,box-shadow .2s;
   }
-  .btn:active { transform:scale(.97); }
+  .btn:active { transform:scale(.97); box-shadow:0 3px 12px rgba(184,146,42,.2); }
 
-  /* ─── MAP ─── */
-  .map-wrap { margin:0 16px; border-radius:18px; overflow:hidden; box-shadow:0 10px 32px rgba(42,26,0,.08); }
+  /* MAP */
+  .map-wrap { margin:0 16px; border-radius:18px; overflow:hidden; box-shadow:0 10px 30px rgba(44,26,0,.08); }
   .map-wrap img { width:100%; display:block; }
-  .map-addr { text-align:center; font-size:14px; font-weight:500; color:var(--text-soft); margin-top:12px; }
+  .map-addr { text-align:center; font-size:13px; font-weight:500; color:var(--text-soft); margin-top:12px; letter-spacing:.3px; }
 
-  /* ─── FOOTER ─── */
+  /* FOOTER */
   .footer { padding:36px 24px 80px; text-align:center; }
-  .footer-bdr { width:100%; height:28px; object-fit:contain; margin-bottom:18px; filter:sepia(.6) saturate(1.5) brightness(.95); }
-  .footer-txt { font-family:'Playfair Display',Georgia,serif; font-size:20px; font-style:italic; color:var(--gold); }
+  .footer-bdr { width:100%; height:26px; object-fit:contain; margin-bottom:18px; filter:sepia(.6) saturate(1.4) brightness(.96); }
+  .footer-txt { font-family:'Playfair Display',Georgia,serif; font-size:19px; font-style:italic; color:var(--gold); }
 </style>
 </head>
 <body>
 
-<!-- ORNAMENT TOP — большой, в потоке, z-index:0 -->
+<!-- ORNAMENT: в потоке, z-index авто (позади всего) -->
 <img class="top-orn" src="assets/ornament-border.png" alt="">
 
 <!-- MUSIC -->
 <button id="music-btn" aria-label="Музыка">
-  <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>
-  <span class="btn-label">Әуен</span>
+  <!-- правильная иконка: filled music note -->
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+  </svg>
+  <span>Әуен</span>
 </button>
 
-<!-- HERO — большой стеклянный блок -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-card">
     <img class="hero-medallion" src="assets/ornament-top.png" alt="">
@@ -284,7 +287,7 @@
 
 <!-- COUNTDOWN -->
 <section class="sec reveal" style="padding-top:0;">
-  <div class="card cd-card">
+  <div class="card cd-wrap">
     <div class="cd-grid">
       <div class="cd-block"><span class="cd-num" id="cd-d">--</span><div class="cd-lbl">Күн</div></div>
       <div class="cd-block"><span class="cd-num" id="cd-h">--</span><div class="cd-lbl">Сағат</div></div>
@@ -296,7 +299,7 @@
 
 <!-- CALENDAR -->
 <section class="sec reveal">
-  <div class="card cal-card">
+  <div class="card cal-wrap">
     <div class="cal-hd">СӘУІР 2026</div>
     <div class="cal-grid" id="cal"></div>
   </div>
@@ -320,47 +323,50 @@
 </footer>
 
 <script>
+// ── MUSIC ──
 const audio = new Audio('assets/music.mp3.mp3');
 audio.preload = 'metadata';
 let playing = false, started = false;
-const musicBtn = document.getElementById('music-btn');
+const mBtn = document.getElementById('music-btn');
 function tryPlay() {
   if (!started) {
     const seek = () => { audio.currentTime = 71; started = true; };
-    if (audio.readyState >= 1) seek();
-    else audio.addEventListener('loadedmetadata', seek, { once: true });
+    audio.readyState >= 1 ? seek() : audio.addEventListener('loadedmetadata', seek, {once:true});
   }
-  audio.play().then(() => { playing = true; musicBtn.classList.add('playing'); }).catch(() => {});
+  audio.play().then(() => { playing=true; mBtn.classList.add('playing'); }).catch(()=>{});
 }
-musicBtn.addEventListener('click', () => {
+mBtn.addEventListener('click', () => {
   if (!playing) tryPlay();
-  else { audio.pause(); playing = false; musicBtn.classList.remove('playing'); }
+  else { audio.pause(); playing=false; mBtn.classList.remove('playing'); }
 });
-audio.addEventListener('pause', () => { playing = false; musicBtn.classList.remove('playing'); });
+audio.addEventListener('pause', () => { playing=false; mBtn.classList.remove('playing'); });
 
+// ── COUNTDOWN ──
 function tick() {
   const diff = new Date('2026-04-26T18:00:00+05:00') - new Date();
   if (diff <= 0) return;
   const pad = n => String(n).padStart(2,'0');
-  [['d',Math.floor(diff/86400000)],['h',Math.floor(diff%86400000/3600000)],
-   ['m',Math.floor(diff%3600000/60000)],['s',Math.floor(diff%60000/1000)]].forEach(([k,v]) => {
-    const el = document.getElementById('cd-'+k), s = pad(v);
-    if (el.textContent !== s) { el.textContent=s; el.classList.remove('flip'); void el.offsetWidth; el.classList.add('flip'); }
+  [['d',~~(diff/86400000)],['h',~~(diff%86400000/3600000)],
+   ['m',~~(diff%3600000/60000)],['s',~~(diff%60000/1000)]].forEach(([k,v])=>{
+    const el=document.getElementById('cd-'+k), s=pad(v);
+    if(el.textContent!==s){el.textContent=s;el.classList.remove('flip');void el.offsetWidth;el.classList.add('flip');}
   });
 }
-tick(); setInterval(tick, 1000);
+tick(); setInterval(tick,1000);
 
+// ── CALENDAR ──
 (function(){
-  const c = document.getElementById('cal');
-  ['ДС','СС','СР','БС','ЖМ','СБ','ЖС'].forEach(d => {
-    const el = document.createElement('div'); el.className='cal-dn'; el.textContent=d; c.appendChild(el);
+  const c=document.getElementById('cal');
+  ['ДС','СС','СР','БС','ЖМ','СБ','ЖС'].forEach(d=>{
+    const el=document.createElement('div');el.className='cal-dn';el.textContent=d;c.appendChild(el);
   });
   for(let i=0;i<2;i++) c.appendChild(document.createElement('div'));
   for(let d=1;d<=30;d++){
-    const el=document.createElement('div'); el.className='cal-d'+(d===26?' hi':''); el.textContent=d; c.appendChild(el);
+    const el=document.createElement('div');el.className='cal-d'+(d===26?' hi':'');el.textContent=d;c.appendChild(el);
   }
 })();
 
+// ── ICS ──
 function dlICS(){
   const s=['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
     'SUMMARY:Сүндет той — Нұрислам және Дінмұхамед',
@@ -369,12 +375,13 @@ function dlICS(){
     'END:VEVENT','END:VCALENDAR'].join('\r\n');
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([s],{type:'text/calendar'}));
-  a.download='sundettoy.ics'; a.click();
+  a.download='sundettoy.ics';a.click();
 }
 
-document.querySelectorAll('.reveal').forEach(el =>
-  new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+// ── REVEAL ──
+document.querySelectorAll('.reveal').forEach(el=>
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
   },{threshold:.1}).observe(el)
 );
 </script>
