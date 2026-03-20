@@ -1,186 +1,300 @@
-﻿<!doctype html>
+<!DOCTYPE html>
 <html lang="kk">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#FCEFD4" />
-    <title>Сүндет той — Нұрислам және Дінмұхамед</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <main>
-      <section class="section hero reveal">
-        <img class="ornament-top" src="assets/ornament-top.png" alt="Қазақ оюы" loading="eager" decoding="async" />
-        <div class="hero-content">
-          <h1 class="hero-title">СҮНДЕТ ТОЙ</h1>
-          <p class="hero-names">Нұрислам және Дінмұхамед</p>
-          <img
-            class="ornament-border"
-            src="assets/ornament-border.png"
-            alt="Өрнек"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-      </section>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сүндет той — Нұрислам және Дінмұхамед</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FDF4E3;
+    --gold: #B8922A;
+    --gold-light: #D4A843;
+    --gold-pale: rgba(184,146,42,0.12);
+    --text: #2A1A00;
+    --text-soft: rgba(42,26,0,0.5);
+    --glass: rgba(255,252,245,0.65);
+    --glass-border: rgba(184,146,42,0.18);
+    --radius: 28px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;max-width:430px;margin:0 auto;overflow-x:hidden;}
 
-      <section class="section reveal">
-        <article class="glass-card invitation-card">
-          <p>Құрметті ағайын-туыс, бауырлар!</p>
-          <p>Сізді перзентіміздің сүндет тойына шақырамыз.</p>
-          <p>Бірге болып, қуанышымызды бөлісуіңізді сұраймыз.</p>
-          <p>Келуіңізді асыға күтеміз!</p>
-        </article>
-      </section>
+  /* MUSIC BTN */
+  #music-btn{position:fixed;right:20px;bottom:28px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(184,146,42,0.5);z-index:999;animation:pulse 2.5s ease-in-out infinite;transition:transform .2s;}
+  #music-btn:active{transform:scale(.92);}
+  #music-btn.playing{animation:none;background:linear-gradient(135deg,#3a2505,#6b4010);}
+  #music-btn svg{width:24px;height:24px;fill:white;}
+  @keyframes pulse{0%,100%{box-shadow:0 4px 24px rgba(184,146,42,.5),0 0 0 0 rgba(184,146,42,.35);}50%{box-shadow:0 4px 24px rgba(184,146,42,.5),0 0 0 16px rgba(184,146,42,0);}}
 
-      <section class="section reveal">
-        <img
-          class="illustration"
-          src="assets/illustration.webp"
-          alt="Ат мінген балалар"
-          loading="lazy"
-          decoding="async"
-        />
-      </section>
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
 
-      <section class="section reveal">
-        <h2 class="section-title">Той иелері</h2>
-        <article class="glass-card hosts-card">
-          <div class="hosts-grid">
-            <div class="host-col">
-              <p class="host-label">Ата-апасы</p>
-              <p class="host-names">Асқат, Рина</p>
-            </div>
-            <div class="host-col">
-              <p class="host-label">Әке-анасы</p>
-              <p class="host-names">Жақсылық, Әсем</p>
-            </div>
-          </div>
-        </article>
-      </section>
+  /* HERO */
+  .hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px 56px;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:360px;height:360px;background:radial-gradient(circle,rgba(212,168,67,.15) 0%,transparent 70%);pointer-events:none;}
 
-      <section class="section date-section reveal">
-        <p class="date-day">26</p>
-        <p class="date-month">СӘУІР</p>
-        <p class="date-year">2026</p>
-        <p class="date-time">18:00</p>
-      </section>
+  .hero-orn{width:120px;height:120px;object-fit:contain;margin-bottom:28px;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 6px 20px rgba(184,146,42,.3));}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 
-      <section class="section reveal">
-        <article class="glass-card countdown-card">
-          <div class="countdown-grid">
-            <div class="countdown-block">
-              <span class="countdown-number" id="days">0</span>
-              <span class="countdown-label">күн</span>
-            </div>
-            <div class="countdown-block">
-              <span class="countdown-number" id="hours">0</span>
-              <span class="countdown-label">сағат</span>
-            </div>
-            <div class="countdown-block">
-              <span class="countdown-number" id="minutes">0</span>
-              <span class="countdown-label">минут</span>
-            </div>
-            <div class="countdown-block">
-              <span class="countdown-number" id="seconds">0</span>
-              <span class="countdown-label">секунд</span>
-            </div>
-          </div>
-        </article>
-      </section>
+  .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:18px;opacity:0;animation:fadeup .9s .2s ease forwards;}
 
-      <section class="section reveal">
-        <h2 class="section-title">СӘУІР 2026</h2>
-        <article class="glass-card calendar-card">
-          <table class="calendar" aria-label="Сәуір 2026">
-            <thead>
-              <tr>
-                <th>ДС</th>
-                <th>СС</th>
-                <th>СР</th>
-                <th>БС</th>
-                <th>ЖМ</th>
-                <th>СБ</th>
-                <th>ЖС</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-                <td>11</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <td>13</td>
-                <td>14</td>
-                <td>15</td>
-                <td>16</td>
-                <td>17</td>
-                <td>18</td>
-                <td>19</td>
-              </tr>
-              <tr>
-                <td>20</td>
-                <td>21</td>
-                <td>22</td>
-                <td>23</td>
-                <td>24</td>
-                <td>25</td>
-                <td><span class="calendar-highlight">26</span></td>
-              </tr>
-              <tr>
-                <td>27</td>
-                <td>28</td>
-                <td>29</td>
-                <td>30</td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </article>
-        <button class="gold-button" id="addToCalendar" type="button">Күнтізбеге қосу</button>
-      </section>
+  .hero-title{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;line-height:.92;letter-spacing:-2px;color:var(--gold);text-align:center;margin-bottom:22px;opacity:0;animation:fadeup .9s .45s ease forwards;text-shadow:0 2px 32px rgba(184,146,42,.2);}
 
-      <section class="section reveal">
-        <img class="map-image" src="assets/map.png.jpg" alt="2GIS карта" loading="lazy" decoding="async" />
-        <a
-          class="gold-button"
-          href="https://2gis.kz/taraz/firm/70000001111844810/71.338587%2C42.899736?m=71.338625%2C42.899499%2F18.82%2Fp%2F47.6%2Fr%2F-54.49&immersive=on"
-          target="_blank"
-          rel="noopener noreferrer"
-          >Ашу 2GIS</a
-        >
-      </section>
-    </main>
+  .hero-names{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;font-style:italic;color:var(--text);text-align:center;margin-bottom:32px;opacity:0;animation:fadeup .9s .7s ease forwards;}
 
-    <footer class="footer section reveal">
-      <img class="ornament-border footer-border" src="assets/ornament-border.png" alt="Өрнек" loading="lazy" decoding="async" />
-      <p>Сізді көруге қуаныштымыз! 🤍</p>
-    </footer>
+  .hero-bdr{width:100%;height:28px;object-fit:contain;opacity:0;animation:fadeup .9s .95s ease forwards;filter:sepia(1) saturate(2) hue-rotate(8deg) brightness(.7);}
 
-    <button class="music-btn" id="musicBtn" type="button" aria-label="Музыканы қосу немесе тоқтату">
-      <img src="assets/music-btn.png" alt="" aria-hidden="true" />
-    </button>
+  @keyframes fadeup{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 
-    <script src="script.js"></script>
-  </body>
+  /* GLASS CARD */
+  .card{background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:var(--radius);padding:32px 24px;margin:0 16px;}
+
+  /* SECTION */
+  .sec{padding:48px 0;}
+  .sec-label{font-size:10px;font-weight:600;letter-spacing:4px;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:6px;}
+  .sec-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--gold);text-align:center;margin-bottom:20px;}
+
+  /* INVITATION */
+  .inv-lead{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:var(--gold);margin-bottom:16px;line-height:1.3;}
+  .inv-body{font-size:15px;line-height:1.8;color:var(--text);}
+  .inv-body p{margin-bottom:10px;}
+  .inv-body p:last-child{margin-bottom:0;}
+
+  /* ILLUSTRATION */
+  .illus-wrap{margin:0 16px;border-radius:24px;overflow:hidden;box-shadow:0 16px 48px rgba(42,26,0,.13);}
+  .illus-wrap img{width:100%;display:block;}
+
+  /* FAMILY */
+  .fam-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:20px;}
+  .fam-col{padding:16px 14px;}
+  .fam-col:first-child{border-right:1px solid var(--glass-border);}
+  .fam-role{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text-soft);margin-bottom:8px;}
+  .fam-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--text);line-height:1.35;}
+  .fam-div{height:1px;background:var(--glass-border);margin:4px 0 18px;}
+  .fam-quote{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--text-soft);text-align:center;line-height:1.65;}
+
+  /* DATE */
+  .date-sec{padding:64px 24px;text-align:center;position:relative;}
+  .date-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(212,168,67,.1) 0%,transparent 65%);pointer-events:none;}
+  .date-num{font-family:'Playfair Display',serif;font-size:120px;font-weight:900;line-height:.95;color:var(--gold);text-shadow:0 4px 40px rgba(184,146,42,.28);letter-spacing:-4px;}
+  .date-month{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:600;letter-spacing:12px;color:var(--gold);text-transform:uppercase;margin:0 0 6px;}
+  .date-year{font-size:16px;font-weight:300;letter-spacing:5px;color:var(--gold-light);margin-bottom:24px;}
+  .date-time{font-family:'Cormorant Garamond',serif;font-size:58px;font-weight:700;color:var(--text);letter-spacing:2px;}
+  .date-sub{font-size:11px;font-weight:500;letter-spacing:3px;color:var(--text-soft);text-transform:uppercase;margin-top:4px;}
+
+  /* COUNTDOWN */
+  .cd-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .cd-block{background:rgba(255,252,245,.85);border:1px solid var(--glass-border);border-radius:20px;padding:22px 12px;text-align:center;}
+  .cd-num{font-family:'Playfair Display',serif;font-size:54px;font-weight:900;color:var(--gold);line-height:1;display:block;}
+  .cd-lbl{font-size:10px;font-weight:600;letter-spacing:2.5px;color:var(--text-soft);text-transform:uppercase;margin-top:6px;}
+  .cd-num.flip{animation:flip .35s ease;}
+  @keyframes flip{from{transform:translateY(-10px);opacity:.2;}to{transform:translateY(0);opacity:1;}}
+
+  /* CALENDAR */
+  .cal-hd{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold);text-align:center;letter-spacing:3px;margin-bottom:20px;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+  .cal-dn{font-size:9px;font-weight:600;letter-spacing:1px;color:var(--text-soft);text-align:center;padding:4px 0 10px;text-transform:uppercase;}
+  .cal-d{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text);border-radius:50%;}
+  .cal-d.hi{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;font-weight:700;font-family:'Playfair Display',serif;font-size:15px;box-shadow:0 4px 16px rgba(184,146,42,.4);}
+
+  /* BTN */
+  .btn{display:block;width:calc(100% - 32px);margin:16px 16px 0;padding:18px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;border:none;border-radius:100px;cursor:pointer;text-align:center;text-decoration:none;box-shadow:0 6px 24px rgba(184,146,42,.35);transition:transform .2s,box-shadow .2s;}
+  .btn:active{transform:scale(.97);}
+
+  /* MAP */
+  .map-wrap{margin:0 16px;border-radius:24px;overflow:hidden;box-shadow:0 12px 40px rgba(42,26,0,.1);}
+  .map-wrap img{width:100%;display:block;}
+  .map-addr{text-align:center;font-size:15px;font-weight:500;color:var(--text);margin-top:14px;letter-spacing:.5px;}
+
+  /* FOOTER */
+  .footer{padding:40px 24px 64px;text-align:center;}
+  .footer-bdr{width:100%;height:24px;object-fit:contain;margin-bottom:24px;filter:sepia(1) saturate(2) hue-rotate(8deg) brightness(.7);}
+  .footer-txt{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:var(--gold);}
+</style>
+</head>
+<body>
+
+<!-- MUSIC -->
+<button id="music-btn" aria-label="Музыка">
+  <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>
+</button>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-orn" src="assets/ornament-top.png" alt="">
+  <p class="hero-eyebrow">Сізді шақырамыз</p>
+  <h1 class="hero-title">СҮНДЕТ<br>ТОЙ</h1>
+  <p class="hero-names">Нұрислам және Дінмұхамед</p>
+  <img class="hero-bdr" src="assets/ornament-border.png" alt="">
+</section>
+
+<!-- INVITATION -->
+<section class="sec reveal">
+  <div class="card">
+    <p class="inv-lead">Құрметті ағайын-туыс, бауырлар!</p>
+    <div class="inv-body">
+      <p>Сізді перзентіміздің сүндет тойына шақырамыз.</p>
+      <p>Бірге болып, қуанышымызды бөлісуіңізді сұраймыз.</p>
+      <p>Келуіңізді асыға күтеміз!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ILLUSTRATION -->
+<section class="sec reveal" style="padding-top:8px;">
+  <div class="illus-wrap">
+    <img src="assets/illustration.webp" alt="Нұрислам және Дінмұхамед">
+  </div>
+</section>
+
+<!-- FAMILY -->
+<section class="sec reveal">
+  <p class="sec-label">Жанұя</p>
+  <h2 class="sec-title">Той иелері</h2>
+  <div class="card" style="padding:24px;">
+    <div class="fam-grid">
+      <div class="fam-col">
+        <p class="fam-role">Ата-апасы</p>
+        <p class="fam-name">Асқат,<br>Рина</p>
+      </div>
+      <div class="fam-col">
+        <p class="fam-role">Әке-анасы</p>
+        <p class="fam-name">Жақсылық,<br>Әсем</p>
+      </div>
+    </div>
+    <div class="fam-div"></div>
+    <p class="fam-quote">Отбасымыздың қуанышына ортақтасқандарыңызға алғысымыз шексіз.</p>
+  </div>
+</section>
+
+<!-- DATE -->
+<section class="date-sec reveal">
+  <div class="date-num">26</div>
+  <div class="date-month">Сәуір</div>
+  <div class="date-year">2 0 2 6</div>
+  <div class="date-time">18:00</div>
+  <div class="date-sub">Бастау уақыты</div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="sec reveal" style="padding-top:0;">
+  <div class="card">
+    <div class="cd-grid">
+      <div class="cd-block"><span class="cd-num" id="cd-d">--</span><div class="cd-lbl">Күн</div></div>
+      <div class="cd-block"><span class="cd-num" id="cd-h">--</span><div class="cd-lbl">Сағат</div></div>
+      <div class="cd-block"><span class="cd-num" id="cd-m">--</span><div class="cd-lbl">Минут</div></div>
+      <div class="cd-block"><span class="cd-num" id="cd-s">--</span><div class="cd-lbl">Секунд</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section class="sec reveal">
+  <div class="card">
+    <div class="cal-hd">СӘУІР 2026</div>
+    <div class="cal-grid" id="cal"></div>
+  </div>
+  <button class="btn" onclick="dlICS()">Күнтізбеге қосу</button>
+</section>
+
+<!-- MAP -->
+<section class="sec reveal">
+  <p class="sec-label">Мекенжай</p>
+  <div class="map-wrap">
+    <img src="assets/map.png.jpg" alt="Карта">
+  </div>
+  <p class="map-addr">Qobyz Ballroom, Тараз</p>
+  <a href="https://2gis.kz/taraz/firm/70000001111844810/71.338587%2C42.899736" target="_blank" class="btn" style="margin-top:14px;">Ашу 2GIS</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer reveal">
+  <img class="footer-bdr" src="assets/ornament-border.png" alt="">
+  <p class="footer-txt">Сізді көруге қуаныштымыз! 🤍</p>
+</footer>
+
+<script>
+// MUSIC
+const audio = new Audio('assets/music.mp3');
+let playing = false, started = false;
+document.getElementById('music-btn').addEventListener('click', function() {
+  if (!started) { audio.currentTime = 71; started = true; }
+  if (!playing) {
+    audio.play().then(() => { playing = true; this.classList.add('playing'); }).catch(()=>{});
+  } else {
+    audio.pause(); playing = false; this.classList.remove('playing');
+  }
+});
+
+// COUNTDOWN
+function tick() {
+  const diff = new Date('2026-04-26T18:00:00+05:00') - new Date();
+  if (diff <= 0) return;
+  const pad = n => String(n).padStart(2,'0');
+  const vals = {
+    'd': Math.floor(diff/86400000),
+    'h': Math.floor(diff%86400000/3600000),
+    'm': Math.floor(diff%3600000/60000),
+    's': Math.floor(diff%60000/1000)
+  };
+  Object.entries(vals).forEach(([k,v]) => {
+    const el = document.getElementById('cd-'+k);
+    const s = pad(v);
+    if (el.textContent !== s) {
+      el.textContent = s;
+      el.classList.remove('flip');
+      void el.offsetWidth;
+      el.classList.add('flip');
+    }
+  });
+}
+tick(); setInterval(tick, 1000);
+
+// CALENDAR
+(function() {
+  const c = document.getElementById('cal');
+  ['ДС','СС','СР','БС','ЖМ','СБ','ЖС'].forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'cal-dn'; el.textContent = d; c.appendChild(el);
+  });
+  // April 2026 starts on Wednesday = index 2 (Mon=0)
+  for (let i = 0; i < 2; i++) {
+    const el = document.createElement('div'); c.appendChild(el);
+  }
+  for (let d = 1; d <= 30; d++) {
+    const el = document.createElement('div');
+    el.className = 'cal-d' + (d===26?' hi':'');
+    el.textContent = d; c.appendChild(el);
+  }
+})();
+
+// ICS
+function dlICS() {
+  const s = ['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
+    'SUMMARY:Сүндет той — Нұрислам және Дінмұхамед',
+    'DTSTART:20260426T180000','DTEND:20260426T230000',
+    'LOCATION:Qobyz Ballroom\\, Тараз',
+    'DESCRIPTION:Сүндет той мерекесіне шақырамыз!',
+    'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([s],{type:'text/calendar'}));
+  a.download = 'sundettoy.ics'; a.click();
+}
+
+// REVEAL
+new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, {threshold:.1}).observe ? 
+  document.querySelectorAll('.reveal').forEach(el =>
+    new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');} });
+    },{threshold:.1}).observe(el)
+  ) : document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+</script>
+</body>
 </html>
