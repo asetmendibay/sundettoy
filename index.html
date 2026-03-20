@@ -6,136 +6,318 @@
 <title>Сүндет той — Нұрислам және Дінмұхамед</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #FDF4E3;
-    --gold: #B8922A;
-    --gold-light: #D4A843;
-    --gold-pale: rgba(184,146,42,0.12);
-    --text: #2A1A00;
-    --text-soft: rgba(42,26,0,0.5);
-    --glass: rgba(255,252,245,0.65);
-    --glass-border: rgba(184,146,42,0.18);
-    --radius: 28px;
+    --bg:           #FFFCF7;
+    --gold:         #B8922A;
+    --gold-light:   #D4A843;
+    --text:         #2A1A00;
+    --text-soft:    rgba(42,26,0,0.5);
+    --glass:        rgba(255,252,245,0.75);
+    --glass-border: rgba(184,146,42,0.25);
+    --radius:       28px;
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;max-width:430px;margin:0 auto;overflow-x:hidden;}
 
-  /* MUSIC BTN */
-  #music-btn{position:fixed;right:20px;bottom:28px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(184,146,42,0.5);z-index:999;animation:pulse 2.5s ease-in-out infinite;transition:transform .2s;}
-  #music-btn:active{transform:scale(.92);}
-  #music-btn.playing{animation:none;background:linear-gradient(135deg,#3a2505,#6b4010);}
-  #music-btn svg{width:24px;height:24px;fill:white;}
-  @keyframes pulse{0%,100%{box-shadow:0 4px 24px rgba(184,146,42,.5),0 0 0 0 rgba(184,146,42,.35);}50%{box-shadow:0 4px 24px rgba(184,146,42,.5),0 0 0 16px rgba(184,146,42,0);}}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
 
-  /* FIXED ORN BACKGROUND */
-  .fixed-orn{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:100svh;pointer-events:none;z-index:0;display:flex;align-items:flex-start;justify-content:center;padding-top:20px;}
-  .fixed-orn img{width:220px;height:220px;object-fit:contain;opacity:0.18;filter:sepia(1) saturate(3) hue-rotate(8deg) brightness(.65);}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+    max-width: 430px;
+    margin: 0 auto;
+    overflow-x: hidden;
+    min-height: 100svh;
+  }
 
-  /* Make body content above fixed orn */
-  .hero,.sec,.date-sec,.footer{position:relative;z-index:1;}
-  .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease;}
-  .reveal.visible{opacity:1;transform:translateY(0);}
+  /* ─── ORNAMENT TOP (fixed strip) ─── */
+  .top-orn {
+    position: fixed;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%; max-width: 430px;
+    height: 48px;
+    object-fit: cover;
+    object-position: center;
+    z-index: 20;
+  }
 
-  /* HERO */
-  .hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px 56px;position:relative;overflow:hidden;}
-  .hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:360px;height:360px;background:radial-gradient(circle,rgba(212,168,67,.15) 0%,transparent 70%);pointer-events:none;}
+  /* push content below fixed ornament */
+  .hero { padding-top: 64px; }
 
-  .hero-orn{width:120px;height:120px;object-fit:contain;margin-bottom:28px;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 6px 20px rgba(184,146,42,.3));}
-  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+  /* ─── MUSIC BTN ─── */
+  #music-btn {
+    position: fixed;
+    right: 16px; bottom: 24px;
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 18px 10px 14px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    border: none; border-radius: 100px; cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 4px 20px rgba(184,146,42,0.5);
+    animation: pulse 2.5s ease-in-out infinite;
+    transition: background .25s;
+  }
+  #music-btn.playing {
+    background: linear-gradient(135deg, #8B7355, #A0835D);
+    animation: none;
+  }
+  #music-btn svg { width:22px; height:22px; fill:#fff; flex-shrink:0; }
+  #music-btn .btn-label {
+    font-size: 13px; font-weight: 600;
+    color: #fff; letter-spacing: 0.5px;
+    font-family: 'Montserrat', sans-serif;
+  }
 
-  .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:18px;opacity:0;animation:fadeup .9s .2s ease forwards;}
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 4px 20px rgba(184,146,42,.5), 0 0 0 0 rgba(184,146,42,.25); }
+    50%      { box-shadow: 0 4px 20px rgba(184,146,42,.5), 0 0 0 14px rgba(184,146,42,0); }
+  }
 
-  .hero-title{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;line-height:.92;letter-spacing:-2px;color:var(--gold);text-align:center;margin-bottom:22px;opacity:0;animation:fadeup .9s .45s ease forwards;text-shadow:0 2px 32px rgba(184,146,42,.2);}
+  /* ─── GLASS CARD ─── */
+  .card {
+    background: var(--glass);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    margin: 0 16px;
+  }
 
-  .hero-names{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;font-style:italic;color:var(--text);text-align:center;margin-bottom:32px;opacity:0;animation:fadeup .9s .7s ease forwards;}
+  /* ─── REVEAL ─── */
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .75s ease, transform .75s ease; }
+  .reveal.visible { opacity:1; transform:none; }
 
-  .hero-bdr{width:100%;height:28px;object-fit:contain;opacity:0;animation:fadeup .9s .95s ease forwards;filter:sepia(1) saturate(2) hue-rotate(8deg) brightness(.7);}
+  /* ─── HERO ─── */
+  .hero {
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    padding: 64px 24px 40px;
+  }
 
-  @keyframes fadeup{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+  .hero-medallion {
+    width: 110px; height: 110px;
+    object-fit: contain;
+    margin-bottom: 22px;
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(0 6px 20px rgba(184,146,42,.25));
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
 
-  /* GLASS CARD */
-  .card{background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:var(--radius);padding:32px 24px;margin:0 16px;}
+  .hero-eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 5px; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 14px;
+    opacity: 0; animation: fadeup .9s .2s ease forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 66px; font-weight: 900; line-height: .95;
+    color: var(--gold); letter-spacing: -1px;
+    margin-bottom: 18px;
+    text-shadow: 0 2px 24px rgba(184,146,42,.15);
+    opacity: 0; animation: fadeup .9s .4s ease forwards;
+  }
+  .hero-names {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--text); margin-bottom: 28px;
+    opacity: 0; animation: fadeup .9s .6s ease forwards;
+  }
+  .hero-bdr {
+    width: 100%; height: 22px; object-fit: contain;
+    filter: sepia(0.5) saturate(1.2) hue-rotate(5deg) brightness(1.1);
+    opacity: 0; animation: fadeup .9s .8s ease forwards;
+  }
+  @keyframes fadeup { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
 
-  /* SECTION */
-  .sec{padding:48px 0;}
-  .sec-label{font-size:10px;font-weight:600;letter-spacing:4px;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:6px;}
-  .sec-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--gold);text-align:center;margin-bottom:20px;}
+  /* ─── SECTION ─── */
+  .sec { padding: 40px 0; }
+  .sec-label {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 4px; color: var(--gold);
+    text-transform: uppercase; text-align: center; margin-bottom: 6px;
+  }
+  .sec-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px; font-weight: 700;
+    color: var(--gold); text-align: center; margin-bottom: 18px;
+  }
 
-  /* INVITATION */
-  .inv-lead{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:var(--gold);margin-bottom:16px;line-height:1.3;}
-  .inv-body{font-size:15px;line-height:1.8;color:var(--text);}
-  .inv-body p{margin-bottom:10px;}
-  .inv-body p:last-child{margin-bottom:0;}
+  /* ─── INVITATION ─── */
+  .inv-card { padding: 28px 22px; }
+  .inv-lead {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 19px; font-weight: 700;
+    color: var(--gold); margin-bottom: 14px; line-height: 1.4;
+  }
+  .inv-body { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .inv-body p { margin-bottom: 10px; }
+  .inv-body p:last-child { margin-bottom: 0; }
 
-  /* ILLUSTRATION */
-  .illus-wrap{margin:0 16px;border-radius:24px;overflow:hidden;box-shadow:0 16px 48px rgba(42,26,0,.13);}
-  .illus-wrap img{width:100%;display:block;}
+  /* ─── ILLUSTRATION ─── */
+  .illus-wrap {
+    margin: 0 16px; border-radius: 20px;
+    overflow: hidden; box-shadow: 0 12px 40px rgba(42,26,0,.12);
+  }
+  .illus-wrap img { width:100%; display:block; }
 
-  /* FAMILY */
-  .fam-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:20px;}
-  .fam-col{padding:16px 14px;}
-  .fam-col:first-child{border-right:1px solid var(--glass-border);}
-  .fam-role{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text-soft);margin-bottom:10px;}
-  .fam-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--gold);line-height:1.4;}
-  .fam-div{height:1px;background:var(--glass-border);margin:16px 0;}
-  .fam-quote{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--text-soft);text-align:center;line-height:1.7;}
+  /* ─── FAMILY ─── */
+  .fam-card { padding: 22px; }
+  .fam-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .fam-col { padding: 14px; }
+  .fam-col:first-child { border-right: 1px solid var(--glass-border); }
+  .fam-role {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--text-soft); margin-bottom: 10px;
+  }
+  .fam-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--gold); line-height: 1.45;
+  }
+  .fam-div { height: 1px; background: var(--glass-border); margin: 16px 0; }
+  .fam-quote {
+    font-size: 13px; font-style: italic;
+    color: var(--text-soft); text-align: center; line-height: 1.75;
+  }
 
-  /* DATE */
-  .date-sec{padding:64px 24px;text-align:center;position:relative;}
-  .date-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(212,168,67,.1) 0%,transparent 65%);pointer-events:none;}
-  .date-num{font-family:'Playfair Display',serif;font-size:120px;font-weight:900;line-height:.95;color:var(--gold);text-shadow:0 4px 40px rgba(184,146,42,.28);letter-spacing:-4px;}
-  .date-month{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:600;letter-spacing:12px;color:var(--gold);text-transform:uppercase;margin:0 0 6px;}
-  .date-year{font-size:16px;font-weight:300;letter-spacing:5px;color:var(--gold-light);margin-bottom:24px;}
-  .date-time{font-family:'Cormorant Garamond',serif;font-size:58px;font-weight:700;color:var(--text);letter-spacing:2px;}
-  .date-sub{font-size:11px;font-weight:500;letter-spacing:3px;color:var(--text-soft);text-transform:uppercase;margin-top:4px;}
+  /* ─── DATE ─── */
+  .date-sec {
+    padding: 56px 24px; text-align: center; position: relative;
+  }
+  .date-sec::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 50% 40%, rgba(184,146,42,.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .date-num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 112px; font-weight: 900; line-height: .95;
+    color: var(--gold); letter-spacing: -4px;
+    text-shadow: 0 4px 28px rgba(184,146,42,.18);
+  }
+  .date-month {
+    font-size: 17px; font-weight: 600; letter-spacing: 10px;
+    color: var(--gold); text-transform: uppercase; margin: 4px 0;
+  }
+  .date-year {
+    font-size: 14px; letter-spacing: 6px;
+    color: var(--gold-light); opacity: .8; margin-bottom: 20px;
+  }
+  .date-time {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 58px; font-weight: 700;
+    color: var(--text); letter-spacing: 2px;
+  }
+  .date-sub {
+    font-size: 10px; font-weight: 500; letter-spacing: 3px;
+    color: var(--text-soft); text-transform: uppercase; margin-top: 6px;
+  }
 
-  /* COUNTDOWN */
-  .cd-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  .cd-block{background:rgba(255,252,245,.85);border:1px solid var(--glass-border);border-radius:20px;padding:22px 12px;text-align:center;}
-  .cd-num{font-family:'Playfair Display',serif;font-size:54px;font-weight:900;color:var(--gold);line-height:1;display:block;}
-  .cd-lbl{font-size:10px;font-weight:600;letter-spacing:2.5px;color:var(--text-soft);text-transform:uppercase;margin-top:6px;}
-  .cd-num.flip{animation:flip .35s ease;}
-  @keyframes flip{from{transform:translateY(-10px);opacity:.2;}to{transform:translateY(0);opacity:1;}}
+  /* ─── COUNTDOWN ─── */
+  .cd-card { padding: 16px; }
+  .cd-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .cd-block {
+    background: rgba(255,252,245,.85);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px; padding: 18px 10px; text-align: center;
+  }
+  .cd-num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 48px; font-weight: 900;
+    color: var(--gold); line-height: 1; display: block;
+  }
+  .cd-lbl {
+    font-size: 10px; font-weight: 500; letter-spacing: 2px;
+    color: var(--text-soft); text-transform: uppercase; margin-top: 6px;
+  }
+  .cd-num.flip { animation: flip .35s ease; }
+  @keyframes flip { from{transform:translateY(-8px);opacity:.2} to{transform:none;opacity:1} }
 
-  /* CALENDAR */
-  .cal-hd{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold);text-align:center;letter-spacing:3px;margin-bottom:20px;}
-  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
-  .cal-dn{font-size:9px;font-weight:600;letter-spacing:1px;color:var(--text-soft);text-align:center;padding:4px 0 10px;text-transform:uppercase;}
-  .cal-d{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text);border-radius:50%;}
-  .cal-d.hi{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;font-weight:700;font-family:'Playfair Display',serif;font-size:15px;box-shadow:0 4px 16px rgba(184,146,42,.4);}
+  /* ─── CALENDAR ─── */
+  .cal-card { padding: 18px 14px; }
+  .cal-hd {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--gold); text-align: center;
+    letter-spacing: 3px; margin-bottom: 18px;
+  }
+  .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+  .cal-dn {
+    font-size: 9px; font-weight: 600; letter-spacing: 1px;
+    color: var(--text-soft); text-align: center;
+    padding: 4px 0 10px; text-transform: uppercase;
+  }
+  .cal-d {
+    aspect-ratio: 1; display:flex; align-items:center; justify-content:center;
+    font-size: 13px; color: var(--text); border-radius: 50%;
+  }
+  .cal-d.hi {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: #fff; font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    box-shadow: 0 4px 14px rgba(184,146,42,.3);
+  }
 
-  /* BTN */
-  .btn{display:block;width:calc(100% - 32px);margin:16px 16px 0;padding:18px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;border:none;border-radius:100px;cursor:pointer;text-align:center;text-decoration:none;box-shadow:0 6px 24px rgba(184,146,42,.35);transition:transform .2s,box-shadow .2s;}
-  .btn:active{transform:scale(.97);}
+  /* ─── BUTTON ─── */
+  .btn {
+    display: block;
+    width: calc(100% - 32px); margin: 14px 16px 0;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    border: none; border-radius: 100px; cursor: pointer;
+    text-align: center; text-decoration: none;
+    box-shadow: 0 6px 20px rgba(184,146,42,.25);
+    transition: transform .2s;
+  }
+  .btn:active { transform: scale(.97); }
 
-  /* MAP */
-  .map-wrap{margin:0 16px;border-radius:24px;overflow:hidden;box-shadow:0 12px 40px rgba(42,26,0,.1);}
-  .map-wrap img{width:100%;display:block;}
-  .map-addr{text-align:center;font-size:15px;font-weight:500;color:var(--text);margin-top:14px;letter-spacing:.5px;}
+  /* ─── MAP ─── */
+  .map-wrap {
+    margin: 0 16px; border-radius: 20px;
+    overflow: hidden; box-shadow: 0 12px 36px rgba(42,26,0,.1);
+  }
+  .map-wrap img { width:100%; display:block; }
+  .map-addr {
+    text-align: center; font-size: 14px; font-weight: 500;
+    color: var(--text-soft); margin-top: 14px; letter-spacing: .5px;
+  }
 
-  /* FOOTER */
-  .footer{padding:40px 24px 64px;text-align:center;}
-  .footer-bdr{width:100%;height:24px;object-fit:contain;margin-bottom:24px;filter:sepia(1) saturate(2) hue-rotate(8deg) brightness(.7);}
-  .footer-txt{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:var(--gold);}
+  /* ─── FOOTER ─── */
+  .footer { padding: 40px 24px 80px; text-align: center; }
+  .footer-bdr {
+    width: 100%; height: 22px; object-fit: contain;
+    margin-bottom: 20px;
+    filter: sepia(0.5) saturate(1.2) hue-rotate(5deg) brightness(1.1);
+  }
+  .footer-txt {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px; font-style: italic; color: var(--gold);
+  }
 </style>
 </head>
 <body>
 
-<!-- FIXED BACKGROUND ORN -->
-<div class="fixed-orn">
-  <img src="assets/ornament-top.png" alt="">
-</div>
+<!-- FIXED ORNAMENT STRIP AT TOP -->
+<img class="top-orn" src="assets/ornament-border.png" alt="">
 
-<!-- MUSIC -->
+<!-- MUSIC BUTTON -->
 <button id="music-btn" aria-label="Музыка">
   <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>
+  <span class="btn-label">Әуен</span>
 </button>
 
 <!-- HERO -->
 <section class="hero">
+  <img class="hero-medallion" src="assets/ornament-top.png" alt="">
   <p class="hero-eyebrow">Сізді шақырамыз</p>
   <h1 class="hero-title">СҮНДЕТ<br>ТОЙ</h1>
   <p class="hero-names">Нұрислам және Дінмұхамед</p>
@@ -144,18 +326,17 @@
 
 <!-- INVITATION -->
 <section class="sec reveal">
-  <div class="card">
+  <div class="card inv-card">
     <p class="inv-lead">Құрметті ағайын-туыс, бауырлар!</p>
     <div class="inv-body">
-      <p>Сізді перзентіміздің сүндет тойына шақырамыз.</p>
-      <p>Бірге болып, қуанышымызды бөлісуіңізді сұраймыз.</p>
-      <p>Келуіңізді асыға күтеміз!</p>
+      <p>Сіздерді қос перзентіміздің қуанышына ортақ болып, ақ баталарыңызды беруге шын жүректен шақырамыз.</p>
+      <p>Қуанышымызға ортақ болып, ақ ниетпен келіп, мерекеміздің сәнін кіргізіңіздер.</p>
     </div>
   </div>
 </section>
 
 <!-- ILLUSTRATION -->
-<section class="sec reveal" style="padding-top:8px;">
+<section class="sec reveal" style="padding-top:0;">
   <div class="illus-wrap">
     <img src="assets/illustration.webp" alt="Нұрислам және Дінмұхамед">
   </div>
@@ -165,7 +346,7 @@
 <section class="sec reveal">
   <p class="sec-label">Жанұя</p>
   <h2 class="sec-title">Той иелері</h2>
-  <div class="card" style="padding:24px;">
+  <div class="card fam-card">
     <div class="fam-grid">
       <div class="fam-col">
         <p class="fam-role">Ата-апасы</p>
@@ -194,7 +375,7 @@
 
 <!-- COUNTDOWN -->
 <section class="sec reveal" style="padding-top:0;">
-  <div class="card">
+  <div class="card cd-card">
     <div class="cd-grid">
       <div class="cd-block"><span class="cd-num" id="cd-d">--</span><div class="cd-lbl">Күн</div></div>
       <div class="cd-block"><span class="cd-num" id="cd-h">--</span><div class="cd-lbl">Сағат</div></div>
@@ -206,7 +387,7 @@
 
 <!-- CALENDAR -->
 <section class="sec reveal">
-  <div class="card">
+  <div class="card cal-card">
     <div class="cal-hd">СӘУІР 2026</div>
     <div class="cal-grid" id="cal"></div>
   </div>
@@ -226,35 +407,49 @@
 <!-- FOOTER -->
 <footer class="footer reveal">
   <img class="footer-bdr" src="assets/ornament-border.png" alt="">
-  <p class="footer-txt">Сізді көруге қуаныштымыз! 🤍</p>
+  <p class="footer-txt">Сізді көруге қуаныштымыз!</p>
 </footer>
 
 <script>
-// MUSIC
-const audio = new Audio('assets/music.mp3');
+// ── MUSIC ──
+// Actual file on disk: assets/music.mp3.mp3
+const audio = new Audio('assets/music.mp3.mp3');
+audio.preload = 'metadata';
 let playing = false, started = false;
-document.getElementById('music-btn').addEventListener('click', function() {
-  if (!started) { audio.currentTime = 71; started = true; }
-  if (!playing) {
-    audio.play().then(() => { playing = true; this.classList.add('playing'); }).catch(()=>{});
-  } else {
-    audio.pause(); playing = false; this.classList.remove('playing');
+const musicBtn = document.getElementById('music-btn');
+
+function tryPlay() {
+  if (!started) {
+    const seek = () => { audio.currentTime = 71; started = true; };
+    if (audio.readyState >= 1) seek();
+    else audio.addEventListener('loadedmetadata', seek, { once: true });
+  }
+  audio.play().then(() => {
+    playing = true;
+    musicBtn.classList.add('playing');
+  }).catch(() => {});
+}
+
+musicBtn.addEventListener('click', () => {
+  if (!playing) tryPlay();
+  else {
+    audio.pause();
+    playing = false;
+    musicBtn.classList.remove('playing');
   }
 });
+audio.addEventListener('pause', () => { playing = false; musicBtn.classList.remove('playing'); });
 
-// COUNTDOWN
+// ── COUNTDOWN ──
 function tick() {
   const diff = new Date('2026-04-26T18:00:00+05:00') - new Date();
   if (diff <= 0) return;
-  const pad = n => String(n).padStart(2,'0');
-  const vals = {
-    'd': Math.floor(diff/86400000),
-    'h': Math.floor(diff%86400000/3600000),
-    'm': Math.floor(diff%3600000/60000),
-    's': Math.floor(diff%60000/1000)
-  };
-  Object.entries(vals).forEach(([k,v]) => {
-    const el = document.getElementById('cd-'+k);
+  const pad = n => String(n).padStart(2, '0');
+  [['d', Math.floor(diff / 86400000)],
+   ['h', Math.floor(diff % 86400000 / 3600000)],
+   ['m', Math.floor(diff % 3600000 / 60000)],
+   ['s', Math.floor(diff % 60000 / 1000)]].forEach(([k, v]) => {
+    const el = document.getElementById('cd-' + k);
     const s = pad(v);
     if (el.textContent !== s) {
       el.textContent = s;
@@ -266,25 +461,23 @@ function tick() {
 }
 tick(); setInterval(tick, 1000);
 
-// CALENDAR
+// ── CALENDAR ──
 (function() {
   const c = document.getElementById('cal');
   ['ДС','СС','СР','БС','ЖМ','СБ','ЖС'].forEach(d => {
     const el = document.createElement('div');
     el.className = 'cal-dn'; el.textContent = d; c.appendChild(el);
   });
-  // April 2026 starts on Wednesday = index 2 (Mon=0)
-  for (let i = 0; i < 2; i++) {
-    const el = document.createElement('div'); c.appendChild(el);
-  }
+  // April 2026 starts on Wednesday (index 2, Mon=0)
+  for (let i = 0; i < 2; i++) c.appendChild(document.createElement('div'));
   for (let d = 1; d <= 30; d++) {
     const el = document.createElement('div');
-    el.className = 'cal-d' + (d===26?' hi':'');
+    el.className = 'cal-d' + (d === 26 ? ' hi' : '');
     el.textContent = d; c.appendChild(el);
   }
 })();
 
-// ICS
+// ── ICS DOWNLOAD ──
 function dlICS() {
   const s = ['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
     'SUMMARY:Сүндет той — Нұрислам және Дінмұхамед',
@@ -293,19 +486,16 @@ function dlICS() {
     'DESCRIPTION:Сүндет той мерекесіне шақырамыз!',
     'END:VEVENT','END:VCALENDAR'].join('\r\n');
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([s],{type:'text/calendar'}));
+  a.href = URL.createObjectURL(new Blob([s], { type: 'text/calendar' }));
   a.download = 'sundettoy.ics'; a.click();
 }
 
-// REVEAL
-new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-}, {threshold:.1}).observe ? 
-  document.querySelectorAll('.reveal').forEach(el =>
-    new IntersectionObserver((entries) => {
-      entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');} });
-    },{threshold:.1}).observe(el)
-  ) : document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+// ── REVEAL ON SCROLL ──
+document.querySelectorAll('.reveal').forEach(el =>
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 }).observe(el)
+);
 </script>
 </body>
 </html>
