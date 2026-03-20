@@ -30,7 +30,12 @@
   #music-btn svg{width:24px;height:24px;fill:white;}
   @keyframes pulse{0%,100%{box-shadow:0 4px 24px rgba(184,146,42,.5),0 0 0 0 rgba(184,146,42,.35);}50%{box-shadow:0 4px 24px rgba(184,146,42,.5),0 0 0 16px rgba(184,146,42,0);}}
 
-  /* REVEAL */
+  /* FIXED ORN BACKGROUND */
+  .fixed-orn{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:100svh;pointer-events:none;z-index:0;display:flex;align-items:flex-start;justify-content:center;padding-top:20px;}
+  .fixed-orn img{width:220px;height:220px;object-fit:contain;opacity:0.18;filter:sepia(1) saturate(3) hue-rotate(8deg) brightness(.65);}
+
+  /* Make body content above fixed orn */
+  .hero,.sec,.date-sec,.footer{position:relative;z-index:1;}
   .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease;}
   .reveal.visible{opacity:1;transform:translateY(0);}
 
@@ -73,10 +78,10 @@
   .fam-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:20px;}
   .fam-col{padding:16px 14px;}
   .fam-col:first-child{border-right:1px solid var(--glass-border);}
-  .fam-role{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text-soft);margin-bottom:8px;}
-  .fam-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--text);line-height:1.35;}
-  .fam-div{height:1px;background:var(--glass-border);margin:4px 0 18px;}
-  .fam-quote{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--text-soft);text-align:center;line-height:1.65;}
+  .fam-role{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text-soft);margin-bottom:10px;}
+  .fam-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--gold);line-height:1.4;}
+  .fam-div{height:1px;background:var(--glass-border);margin:16px 0;}
+  .fam-quote{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--text-soft);text-align:center;line-height:1.7;}
 
   /* DATE */
   .date-sec{padding:64px 24px;text-align:center;position:relative;}
@@ -119,6 +124,11 @@
 </head>
 <body>
 
+<!-- FIXED BACKGROUND ORN -->
+<div class="fixed-orn">
+  <img src="assets/ornament-top.png" alt="">
+</div>
+
 <!-- MUSIC -->
 <button id="music-btn" aria-label="Музыка">
   <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>
@@ -126,7 +136,6 @@
 
 <!-- HERO -->
 <section class="hero">
-  <img class="hero-orn" src="assets/ornament-top.png" alt="">
   <p class="hero-eyebrow">Сізді шақырамыз</p>
   <h1 class="hero-title">СҮНДЕТ<br>ТОЙ</h1>
   <p class="hero-names">Нұрислам және Дінмұхамед</p>
@@ -160,11 +169,13 @@
     <div class="fam-grid">
       <div class="fam-col">
         <p class="fam-role">Ата-апасы</p>
-        <p class="fam-name">Асқат,<br>Рина</p>
+        <p class="fam-name">Асқат</p>
+        <p class="fam-name">Рина</p>
       </div>
       <div class="fam-col">
         <p class="fam-role">Әке-анасы</p>
-        <p class="fam-name">Жақсылық,<br>Әсем</p>
+        <p class="fam-name">Жақсылық</p>
+        <p class="fam-name">Әсем</p>
       </div>
     </div>
     <div class="fam-div"></div>
