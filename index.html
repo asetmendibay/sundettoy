@@ -22,16 +22,28 @@
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
 
-  /* Тёплый градиент — ключ к работающему glassmorphism */
   body {
-    background: linear-gradient(168deg, #FFFAF0 0%, #F7E4B8 55%, #EED49A 100%);
-    background-attachment: fixed;
+    background: #F7E9C8; /* fallback */
     color: var(--text);
     font-family: 'Montserrat', system-ui, sans-serif;
     max-width: 430px;
     margin: 0 auto;
     overflow-x: hidden;
     min-height: 100svh;
+  }
+  /* Фиксированный фон на весь viewport — не смещается при скролле */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    /* Радиальный градиент: центр светлый, края теплее — равномерно на всей странице */
+    background: radial-gradient(ellipse 120% 80% at 50% 25%,
+      #FFFDFA 0%,
+      #FBF0D4 45%,
+      #F3E0AD 80%,
+      #EDD59A 100%
+    );
   }
 
   /* ── GLASS CARD ── */
@@ -64,21 +76,24 @@
   ══════════════════════════════ */
   #music-btn {
     position: fixed; right:16px; bottom:24px; z-index:999;
-    display: flex; align-items:center; gap:8px;
-    padding: 11px 20px 11px 14px;
+    display: flex; align-items:center; gap:10px;
+    padding: 14px 22px 14px 16px;
     background: linear-gradient(135deg, var(--gold-lt), var(--gold));
     border: none; border-radius: 100px; cursor: pointer;
-    box-shadow: 0 4px 20px rgba(184,146,42,.45);
-    animation: pulse 2.5s ease-in-out infinite;
-    transition: background .3s;
+    box-shadow: 0 6px 28px rgba(184,146,42,.55), 0 2px 8px rgba(184,146,42,.3);
+    animation: pulse 2s ease-in-out infinite;
+    transition: background .3s, box-shadow .3s;
   }
-  #music-btn.playing { background: linear-gradient(135deg,#7a6040,#5a4020); animation:none; }
-  /* правильная нота — filled music note */
-  #music-btn svg { width:20px; height:20px; fill:#fff; flex-shrink:0; }
-  #music-btn span { font-size:13px; font-weight:600; color:#fff; letter-spacing:.3px; }
+  #music-btn.playing {
+    background: linear-gradient(135deg,#6b5030,#4a3018);
+    box-shadow: 0 4px 16px rgba(0,0,0,.3);
+    animation: none;
+  }
+  #music-btn svg { width:22px; height:22px; fill:#fff; flex-shrink:0; }
+  #music-btn span { font-size:14px; font-weight:700; color:#fff; letter-spacing:.5px; }
   @keyframes pulse {
-    0%,100% { box-shadow:0 4px 20px rgba(184,146,42,.45),0 0 0 0 rgba(184,146,42,.2); }
-    50%      { box-shadow:0 4px 20px rgba(184,146,42,.45),0 0 0 14px rgba(184,146,42,0); }
+    0%,100% { box-shadow:0 6px 28px rgba(184,146,42,.55),0 0 0 0 rgba(184,146,42,.3); }
+    50%      { box-shadow:0 6px 28px rgba(184,146,42,.55),0 0 0 18px rgba(184,146,42,0); }
   }
 
   /* ══════════════════════════════
@@ -156,17 +171,27 @@
   .fam-quote { font-size:13px; font-style:italic; color:var(--text-soft); text-align:center; line-height:1.7; }
 
   /* DATE */
-  .date-sec { padding:52px 24px 44px; text-align:center; }
+  .date-sec { padding: 28px 16px; }
+  .date-card {
+    background: var(--card);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 44px 24px 40px;
+    text-align: center;
+  }
   .date-num {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 104px; font-weight:900; line-height:1;
+    font-size: 96px; font-weight:900; line-height:1;
     color: var(--gold); letter-spacing:-3px;
-    text-shadow: 0 3px 24px rgba(184,146,42,.18);
+    text-shadow: 0 3px 24px rgba(184,146,42,.2);
   }
-  .date-month { font-size:15px; font-weight:600; letter-spacing:9px; color:var(--gold); text-transform:uppercase; margin:6px 0 2px; }
-  .date-year  { font-size:13px; letter-spacing:6px; color:var(--gold-lt); margin-bottom:22px; }
-  .date-time  { font-family:'Playfair Display',Georgia,serif; font-size:54px; font-weight:700; color:var(--text); letter-spacing:2px; }
-  .date-sub   { font-size:9px; font-weight:600; letter-spacing:3px; color:var(--text-soft); text-transform:uppercase; margin-top:6px; }
+  .date-month { font-size:13px; font-weight:600; letter-spacing:9px; color:var(--gold); text-transform:uppercase; margin:8px 0 4px; }
+  .date-year  { font-size:12px; letter-spacing:6px; color:var(--gold-lt); margin-bottom:24px; opacity:.85; }
+  .date-divider { width:48px; height:1px; background:var(--border); margin:0 auto 24px; }
+  .date-time  { font-family:'Playfair Display',Georgia,serif; font-size:58px; font-weight:700; color:var(--text); letter-spacing:2px; }
+  .date-sub   { font-size:9px; font-weight:600; letter-spacing:3.5px; color:var(--text-soft); text-transform:uppercase; margin-top:8px; }
 
   /* COUNTDOWN */
   .cd-wrap { padding: 14px; }
@@ -278,11 +303,14 @@
 
 <!-- DATE -->
 <section class="date-sec reveal">
-  <div class="date-num">26</div>
-  <div class="date-month">Сәуір</div>
-  <div class="date-year">2 0 2 6</div>
-  <div class="date-time">18:00</div>
-  <div class="date-sub">Бастау уақыты</div>
+  <div class="date-card">
+    <div class="date-num">26</div>
+    <div class="date-month">Сәуір</div>
+    <div class="date-year">2 0 2 6</div>
+    <div class="date-divider"></div>
+    <div class="date-time">18:00</div>
+    <div class="date-sub">Бастау уақыты</div>
+  </div>
 </section>
 
 <!-- COUNTDOWN -->
