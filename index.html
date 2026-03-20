@@ -9,13 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:           #FFFAF3;
+    --bg:           #FDF6EC;
     --gold:         #B8922A;
     --gold-light:   #D4A843;
     --text:         #2A1A00;
     --text-soft:    rgba(42,26,0,0.5);
-    --glass:        rgba(255,248,240,0.7);
-    --glass-border: rgba(184,146,42,0.16);
+    --glass:        rgba(240,220,190,0.45);
+    --glass-border: rgba(184,146,42,0.22);
     --radius:       24px;
   }
 
@@ -25,20 +25,25 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+    font-family: 'Montserrat', system-ui, sans-serif;
     max-width: 430px;
     margin: 0 auto;
     overflow-x: hidden;
-    min-height: 100svh;
   }
 
-  /* ─── TOP ORNAMENT (not fixed - flows with page) ─── */
+  /* ─── ORNAMENT: в потоке, позади всего ─── */
   .top-orn {
     width: 100%;
     height: auto;
-    object-fit: cover;
-    object-position: center;
     display: block;
+    position: relative;
+    z-index: 0;
+  }
+
+  /* весь основной контент поверх орнамента */
+  .hero, .sec, .date-sec, .footer {
+    position: relative;
+    z-index: 1;
   }
 
   /* ─── MUSIC BTN ─── */
@@ -50,7 +55,7 @@
     background: linear-gradient(135deg, var(--gold-light), var(--gold));
     border: none; border-radius: 100px; cursor: pointer;
     z-index: 999;
-    box-shadow: 0 4px 20px rgba(184,146,42,0.5);
+    box-shadow: 0 4px 20px rgba(184,146,42,0.45);
     animation: pulse 2.5s ease-in-out infinite;
     transition: background .25s;
   }
@@ -62,55 +67,50 @@
   #music-btn .btn-label {
     font-size: 13px; font-weight: 600;
     color: #fff; letter-spacing: 0.5px;
-    font-family: 'Montserrat', sans-serif;
   }
-
   @keyframes pulse {
-    0%,100% { box-shadow: 0 4px 20px rgba(184,146,42,.5), 0 0 0 0 rgba(184,146,42,.25); }
-    50%      { box-shadow: 0 4px 20px rgba(184,146,42,.5), 0 0 0 14px rgba(184,146,42,0); }
+    0%,100% { box-shadow: 0 4px 20px rgba(184,146,42,.45), 0 0 0 0 rgba(184,146,42,.2); }
+    50%      { box-shadow: 0 4px 20px rgba(184,146,42,.45), 0 0 0 14px rgba(184,146,42,0); }
   }
 
   /* ─── GLASS CARD ─── */
+  /* светлый фон → карточки чуть насыщеннее/темнее = эффект стекла */
   .card {
     background: var(--glass);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     margin: 0 16px;
   }
 
   /* ─── REVEAL ─── */
-  .reveal { opacity:0; transform:translateY(28px); transition:opacity .75s ease, transform .75s ease; }
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
   .reveal.visible { opacity:1; transform:none; }
 
   /* ─── HERO ─── */
   .hero {
     display: flex; flex-direction: column;
     align-items: center; text-align: center;
-    padding: 48px 24px 40px;
+    padding: 40px 24px 40px;
   }
-
   .hero-medallion {
-    width: 110px; height: 110px;
-    object-fit: contain;
+    width: 110px; height: 110px; object-fit: contain;
     margin-bottom: 22px;
     animation: float 4s ease-in-out infinite;
-    filter: drop-shadow(0 6px 20px rgba(184,146,42,.25));
+    filter: drop-shadow(0 6px 20px rgba(184,146,42,.2));
   }
   @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
 
   .hero-eyebrow {
-    font-size: 10px; font-weight: 600;
-    letter-spacing: 5px; color: var(--gold);
-    text-transform: uppercase; margin-bottom: 14px;
+    font-size: 10px; font-weight: 600; letter-spacing: 5px;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 14px;
     opacity: 0; animation: fadeup .9s .2s ease forwards;
   }
   .hero-title {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 66px; font-weight: 900; line-height: .95;
-    color: var(--gold); letter-spacing: -1px;
-    margin-bottom: 18px;
+    color: var(--gold); letter-spacing: -1px; margin-bottom: 18px;
     text-shadow: 0 2px 24px rgba(184,146,42,.15);
     opacity: 0; animation: fadeup .9s .4s ease forwards;
   }
@@ -122,18 +122,13 @@
   }
   .hero-bdr {
     width: 100%; height: 22px; object-fit: contain;
-    filter: sepia(0.5) saturate(1.2) hue-rotate(5deg) brightness(1.1);
+    filter: sepia(0.6) saturate(1.5) brightness(0.95);
     opacity: 0; animation: fadeup .9s .8s ease forwards;
   }
   @keyframes fadeup { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
 
   /* ─── SECTION ─── */
   .sec { padding: 40px 0; }
-  .sec-label {
-    font-size: 9px; font-weight: 600;
-    letter-spacing: 4px; color: var(--gold);
-    text-transform: uppercase; text-align: center; margin-bottom: 6px;
-  }
   .sec-title {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 24px; font-weight: 700;
@@ -144,17 +139,17 @@
   .inv-card { padding: 28px 22px; }
   .inv-lead {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 19px; font-weight: 700;
-    color: var(--gold); margin-bottom: 14px; line-height: 1.4;
+    font-size: 18px; font-weight: 700;
+    color: var(--gold); margin-bottom: 16px; line-height: 1.4;
   }
-  .inv-body { font-size: 15px; line-height: 1.85; color: var(--text); }
-  .inv-body p { margin-bottom: 10px; }
+  .inv-body { font-size: 15px; line-height: 1.9; color: var(--text); }
+  .inv-body p { margin-bottom: 12px; }
   .inv-body p:last-child { margin-bottom: 0; }
 
   /* ─── ILLUSTRATION ─── */
   .illus-wrap {
     margin: 0 16px; border-radius: 20px;
-    overflow: hidden; box-shadow: 0 12px 40px rgba(42,26,0,.12);
+    overflow: hidden; box-shadow: 0 12px 40px rgba(42,26,0,.1);
   }
   .illus-wrap img { width:100%; display:block; }
 
@@ -164,14 +159,12 @@
   .fam-col { padding: 14px; }
   .fam-col:first-child { border-right: 1px solid var(--glass-border); }
   .fam-role {
-    font-size: 9px; font-weight: 600;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    color: var(--text-soft); margin-bottom: 10px;
+    font-size: 9px; font-weight: 600; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--text-soft); margin-bottom: 10px;
   }
   .fam-name {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 20px; font-weight: 700;
-    color: var(--gold); line-height: 1.45;
+    font-size: 20px; font-weight: 700; color: var(--gold); line-height: 1.45;
   }
   .fam-div { height: 1px; background: var(--glass-border); margin: 16px 0; }
   .fam-quote {
@@ -180,55 +173,42 @@
   }
 
   /* ─── DATE ─── */
-  .date-sec {
-    padding: 56px 24px; text-align: center; position: relative;
-  }
+  .date-sec { padding: 56px 24px; text-align: center; position: relative; }
   .date-sec::before {
     content:''; position:absolute; inset:0;
-    background: radial-gradient(ellipse at 50% 40%, rgba(184,146,42,.08) 0%, transparent 65%);
+    background: radial-gradient(ellipse at 50% 40%, rgba(184,146,42,.07) 0%, transparent 65%);
     pointer-events: none;
   }
   .date-num {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 112px; font-weight: 900; line-height: .95;
     color: var(--gold); letter-spacing: -4px;
-    text-shadow: 0 4px 28px rgba(184,146,42,.18);
+    text-shadow: 0 4px 28px rgba(184,146,42,.15);
   }
   .date-month {
     font-size: 17px; font-weight: 600; letter-spacing: 10px;
     color: var(--gold); text-transform: uppercase; margin: 4px 0;
   }
-  .date-year {
-    font-size: 14px; letter-spacing: 6px;
-    color: var(--gold-light); opacity: .8; margin-bottom: 20px;
-  }
+  .date-year { font-size: 14px; letter-spacing: 6px; color: var(--gold-light); opacity:.8; margin-bottom: 20px; }
   .date-time {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 58px; font-weight: 700;
-    color: var(--text); letter-spacing: 2px;
+    font-size: 58px; font-weight: 700; color: var(--text); letter-spacing: 2px;
   }
-  .date-sub {
-    font-size: 10px; font-weight: 500; letter-spacing: 3px;
-    color: var(--text-soft); text-transform: uppercase; margin-top: 6px;
-  }
+  .date-sub { font-size: 10px; font-weight: 500; letter-spacing: 3px; color: var(--text-soft); text-transform: uppercase; margin-top: 6px; }
 
   /* ─── COUNTDOWN ─── */
   .cd-card { padding: 16px; }
   .cd-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .cd-block {
-    background: rgba(255,248,240,.85);
+    background: rgba(230,210,180,0.5);
     border: 1px solid var(--glass-border);
     border-radius: 18px; padding: 18px 10px; text-align: center;
   }
   .cd-num {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 48px; font-weight: 900;
-    color: var(--gold); line-height: 1; display: block;
+    font-size: 48px; font-weight: 900; color: var(--gold); line-height: 1; display: block;
   }
-  .cd-lbl {
-    font-size: 10px; font-weight: 500; letter-spacing: 2px;
-    color: var(--text-soft); text-transform: uppercase; margin-top: 6px;
-  }
+  .cd-lbl { font-size: 10px; font-weight: 500; letter-spacing: 2px; color: var(--text-soft); text-transform: uppercase; margin-top: 6px; }
   .cd-num.flip { animation: flip .35s ease; }
   @keyframes flip { from{transform:translateY(-8px);opacity:.2} to{transform:none;opacity:1} }
 
@@ -236,20 +216,11 @@
   .cal-card { padding: 18px 14px; }
   .cal-hd {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 15px; font-weight: 700;
-    color: var(--gold); text-align: center;
-    letter-spacing: 3px; margin-bottom: 18px;
+    font-size: 15px; font-weight: 700; color: var(--gold); text-align: center; letter-spacing: 3px; margin-bottom: 18px;
   }
   .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
-  .cal-dn {
-    font-size: 9px; font-weight: 600; letter-spacing: 1px;
-    color: var(--text-soft); text-align: center;
-    padding: 4px 0 10px; text-transform: uppercase;
-  }
-  .cal-d {
-    aspect-ratio: 1; display:flex; align-items:center; justify-content:center;
-    font-size: 13px; color: var(--text); border-radius: 50%;
-  }
+  .cal-dn { font-size: 9px; font-weight: 600; letter-spacing: 1px; color: var(--text-soft); text-align: center; padding: 4px 0 10px; text-transform: uppercase; }
+  .cal-d { aspect-ratio: 1; display:flex; align-items:center; justify-content:center; font-size: 13px; color: var(--text); border-radius: 50%; }
   .cal-d.hi {
     background: linear-gradient(135deg, var(--gold-light), var(--gold));
     color: #fff; font-weight: 700;
@@ -259,48 +230,29 @@
 
   /* ─── BUTTON ─── */
   .btn {
-    display: block;
-    width: calc(100% - 32px); margin: 14px 16px 0;
-    padding: 16px;
+    display: block; width: calc(100% - 32px); margin: 14px 16px 0; padding: 16px;
     background: linear-gradient(135deg, var(--gold-light), var(--gold));
-    color: #fff;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase;
-    border: none; border-radius: 100px; cursor: pointer;
-    text-align: center; text-decoration: none;
-    box-shadow: 0 6px 20px rgba(184,146,42,.25);
-    transition: transform .2s;
+    color: #fff; font-family: 'Montserrat', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    border: none; border-radius: 100px; cursor: pointer; text-align: center; text-decoration: none;
+    box-shadow: 0 6px 20px rgba(184,146,42,.22); transition: transform .2s;
   }
   .btn:active { transform: scale(.97); }
 
   /* ─── MAP ─── */
-  .map-wrap {
-    margin: 0 16px; border-radius: 20px;
-    overflow: hidden; box-shadow: 0 12px 36px rgba(42,26,0,.1);
-  }
+  .map-wrap { margin: 0 16px; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 36px rgba(42,26,0,.08); }
   .map-wrap img { width:100%; display:block; }
-  .map-addr {
-    text-align: center; font-size: 14px; font-weight: 500;
-    color: var(--text-soft); margin-top: 14px; letter-spacing: .5px;
-  }
+  .map-addr { text-align: center; font-size: 14px; font-weight: 500; color: var(--text-soft); margin-top: 14px; letter-spacing: .5px; }
 
   /* ─── FOOTER ─── */
   .footer { padding: 40px 24px 80px; text-align: center; }
-  .footer-bdr {
-    width: 100%; height: 22px; object-fit: contain;
-    margin-bottom: 20px;
-    filter: sepia(0.5) saturate(1.2) hue-rotate(5deg) brightness(1.1);
-  }
-  .footer-txt {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 20px; font-style: italic; color: var(--gold);
-  }
+  .footer-bdr { width: 100%; height: 22px; object-fit: contain; margin-bottom: 20px; filter: sepia(0.6) saturate(1.5) brightness(0.95); }
+  .footer-txt { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-style: italic; color: var(--gold); }
 </style>
 </head>
 <body>
 
-<!-- TOP ORNAMENT (normal flow, not fixed) -->
+<!-- ORNAMENT TOP — в потоке страницы, z-index: 0, контент поверх -->
 <img class="top-orn" src="assets/ornament-border.png" alt="">
 
 <!-- MUSIC BUTTON -->
@@ -321,13 +273,11 @@
 <!-- INVITATION -->
 <section class="sec reveal">
   <div class="card inv-card">
-    <p class="inv-lead">Өндіріске барлықта...</p>
+    <p class="inv-lead">Құрметті ағайын-туыс, бауырлар!</p>
     <div class="inv-body">
-      <p><i>Өндіріскі түнде,<br>Сүндет той құрметінде,</i></p>
-      <p><i>Екі баланың ақ батасы,<br>Ата-анасы қуанышы.</i></p>
-      <p style="margin-top: 14px;"><i>Сізді шақырамыз, бауырлар,<br>Өндіге өндіге, мерекемізге!</i></p>
-      <p style="margin-top: 14px;"><i>Ақ жүрегімен, ақ ойымен,<br>Өмір жарқын, өндіге туындай,<br>Сүндет той — өндіге өндіге,<br>Отбасы құдайтас, сағасында!</i></p>
-      <p style="margin-top: 16px; font-size: 13px; opacity: 0.7; border-top: 1px solid var(--glass-border); padding-top: 12px;">Қайырлы Құдайтас,<br>Қайырлы батасы,<br>Мерекелік түнде, келіңіздер.</p>
+      <p>Сіздерді қос перзентіміздің — <strong>Нұрислам мен Дінмұхамедтің</strong> — сүндет тойына шын жүректен шақырамыз.</p>
+      <p>Қуанышымызға ортақ болып, ақ ниетпен келіп, ақ баталарыңызды берулеріңізді сұраймыз.</p>
+      <p>Мерекемізді бірге тойлайық!</p>
     </div>
   </div>
 </section>
@@ -341,7 +291,6 @@
 
 <!-- FAMILY -->
 <section class="sec reveal">
-  <p class="sec-label">Жанұя</p>
   <h2 class="sec-title">Той иелері</h2>
   <div class="card fam-card">
     <div class="fam-grid">
@@ -393,7 +342,7 @@
 
 <!-- MAP -->
 <section class="sec reveal">
-  <p class="sec-label">Мекенжай</p>
+  <h2 class="sec-title">Мекенжай</h2>
   <div class="map-wrap">
     <img src="assets/map.png.jpg" alt="Карта">
   </div>
@@ -420,19 +369,11 @@ function tryPlay() {
     if (audio.readyState >= 1) seek();
     else audio.addEventListener('loadedmetadata', seek, { once: true });
   }
-  audio.play().then(() => {
-    playing = true;
-    musicBtn.classList.add('playing');
-  }).catch(() => {});
+  audio.play().then(() => { playing = true; musicBtn.classList.add('playing'); }).catch(() => {});
 }
-
 musicBtn.addEventListener('click', () => {
   if (!playing) tryPlay();
-  else {
-    audio.pause();
-    playing = false;
-    musicBtn.classList.remove('playing');
-  }
+  else { audio.pause(); playing = false; musicBtn.classList.remove('playing'); }
 });
 audio.addEventListener('pause', () => { playing = false; musicBtn.classList.remove('playing'); });
 
@@ -441,55 +382,46 @@ function tick() {
   const diff = new Date('2026-04-26T18:00:00+05:00') - new Date();
   if (diff <= 0) return;
   const pad = n => String(n).padStart(2, '0');
-  [['d', Math.floor(diff / 86400000)],
-   ['h', Math.floor(diff % 86400000 / 3600000)],
-   ['m', Math.floor(diff % 3600000 / 60000)],
-   ['s', Math.floor(diff % 60000 / 1000)]].forEach(([k, v]) => {
-    const el = document.getElementById('cd-' + k);
-    const s = pad(v);
-    if (el.textContent !== s) {
-      el.textContent = s;
-      el.classList.remove('flip');
-      void el.offsetWidth;
-      el.classList.add('flip');
-    }
+  [['d', Math.floor(diff/86400000)],
+   ['h', Math.floor(diff%86400000/3600000)],
+   ['m', Math.floor(diff%3600000/60000)],
+   ['s', Math.floor(diff%60000/1000)]].forEach(([k,v]) => {
+    const el = document.getElementById('cd-'+k), s = pad(v);
+    if (el.textContent !== s) { el.textContent = s; el.classList.remove('flip'); void el.offsetWidth; el.classList.add('flip'); }
   });
 }
 tick(); setInterval(tick, 1000);
 
 // ── CALENDAR ──
-(function() {
+(function(){
   const c = document.getElementById('cal');
   ['ДС','СС','СР','БС','ЖМ','СБ','ЖС'].forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'cal-dn'; el.textContent = d; c.appendChild(el);
+    const el = document.createElement('div'); el.className='cal-dn'; el.textContent=d; c.appendChild(el);
   });
-  for (let i = 0; i < 2; i++) c.appendChild(document.createElement('div'));
-  for (let d = 1; d <= 30; d++) {
-    const el = document.createElement('div');
-    el.className = 'cal-d' + (d === 26 ? ' hi' : '');
-    el.textContent = d; c.appendChild(el);
+  for(let i=0;i<2;i++) c.appendChild(document.createElement('div'));
+  for(let d=1;d<=30;d++){
+    const el=document.createElement('div'); el.className='cal-d'+(d===26?' hi':''); el.textContent=d; c.appendChild(el);
   }
 })();
 
-// ── ICS DOWNLOAD ──
-function dlICS() {
-  const s = ['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
+// ── ICS ──
+function dlICS(){
+  const s=['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
     'SUMMARY:Сүндет той — Нұрислам және Дінмұхамед',
     'DTSTART:20260426T180000','DTEND:20260426T230000',
     'LOCATION:Qobyz Ballroom\\, Тараз',
     'DESCRIPTION:Сүндет той мерекесіне шақырамыз!',
     'END:VEVENT','END:VCALENDAR'].join('\r\n');
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([s], { type: 'text/calendar' }));
-  a.download = 'sundettoy.ics'; a.click();
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([s],{type:'text/calendar'}));
+  a.download='sundettoy.ics'; a.click();
 }
 
-// ── REVEAL ON SCROLL ──
+// ── REVEAL ──
 document.querySelectorAll('.reveal').forEach(el =>
-  new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 }).observe(el)
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  },{threshold:.1}).observe(el)
 );
 </script>
 </body>
