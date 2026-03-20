@@ -14,9 +14,9 @@
     --gold-light:   #D4A843;
     --text:         #2A1A00;
     --text-soft:    rgba(42,26,0,0.5);
-    --glass:        rgba(240,220,190,0.45);
+    --glass:        rgba(220,195,155,0.38);
     --glass-border: rgba(184,146,42,0.22);
-    --radius:       24px;
+    --radius:       22px;
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -31,50 +31,21 @@
     overflow-x: hidden;
   }
 
-  /* ─── ORNAMENT: в потоке, позади всего ─── */
+  /* ─── TOP ORNAMENT — в потоке, позади контента ─── */
   .top-orn {
     width: 100%;
-    height: auto;
+    height: 70px;          /* больше чем раньше (было 48px) */
+    object-fit: cover;
+    object-position: center;
     display: block;
     position: relative;
     z-index: 0;
   }
 
-  /* весь основной контент поверх орнамента */
-  .hero, .sec, .date-sec, .footer {
-    position: relative;
-    z-index: 1;
-  }
+  /* весь контент поверх орнамента */
+  .hero, .sec, .date-sec, .footer { position: relative; z-index: 1; }
 
-  /* ─── MUSIC BTN ─── */
-  #music-btn {
-    position: fixed;
-    right: 16px; bottom: 24px;
-    display: flex; align-items: center; gap: 8px;
-    padding: 10px 18px 10px 14px;
-    background: linear-gradient(135deg, var(--gold-light), var(--gold));
-    border: none; border-radius: 100px; cursor: pointer;
-    z-index: 999;
-    box-shadow: 0 4px 20px rgba(184,146,42,0.45);
-    animation: pulse 2.5s ease-in-out infinite;
-    transition: background .25s;
-  }
-  #music-btn.playing {
-    background: linear-gradient(135deg, #8B7355, #A0835D);
-    animation: none;
-  }
-  #music-btn svg { width:22px; height:22px; fill:#fff; flex-shrink:0; }
-  #music-btn .btn-label {
-    font-size: 13px; font-weight: 600;
-    color: #fff; letter-spacing: 0.5px;
-  }
-  @keyframes pulse {
-    0%,100% { box-shadow: 0 4px 20px rgba(184,146,42,.45), 0 0 0 0 rgba(184,146,42,.2); }
-    50%      { box-shadow: 0 4px 20px rgba(184,146,42,.45), 0 0 0 14px rgba(184,146,42,0); }
-  }
-
-  /* ─── GLASS CARD ─── */
-  /* светлый фон → карточки чуть насыщеннее/темнее = эффект стекла */
+  /* ─── GLASS CARD — отдельные заметные блоки ─── */
   .card {
     background: var(--glass);
     backdrop-filter: blur(20px);
@@ -84,190 +55,182 @@
     margin: 0 16px;
   }
 
+  /* ─── MUSIC BTN ─── */
+  #music-btn {
+    position: fixed; right: 16px; bottom: 24px;
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 18px 10px 14px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    border: none; border-radius: 100px; cursor: pointer; z-index: 999;
+    box-shadow: 0 4px 20px rgba(184,146,42,.45);
+    animation: pulse 2.5s ease-in-out infinite;
+    transition: background .25s;
+  }
+  #music-btn.playing { background: linear-gradient(135deg, #8B7355, #A0835D); animation: none; }
+  #music-btn svg { width:22px; height:22px; fill:#fff; flex-shrink:0; }
+  #music-btn .btn-label { font-size:13px; font-weight:600; color:#fff; letter-spacing:.5px; }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 4px 20px rgba(184,146,42,.45), 0 0 0 0 rgba(184,146,42,.2); }
+    50%      { box-shadow: 0 4px 20px rgba(184,146,42,.45), 0 0 0 14px rgba(184,146,42,0); }
+  }
+
   /* ─── REVEAL ─── */
   .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
   .reveal.visible { opacity:1; transform:none; }
 
-  /* ─── HERO ─── */
-  .hero {
-    display: flex; flex-direction: column;
-    align-items: center; text-align: center;
-    padding: 40px 24px 40px;
-  }
-  .hero-medallion {
-    width: 110px; height: 110px; object-fit: contain;
-    margin-bottom: 22px;
-    animation: float 4s ease-in-out infinite;
-    filter: drop-shadow(0 6px 20px rgba(184,146,42,.2));
-  }
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  /* ─── HERO — большой стеклянный блок (жёлтый контур на скрине) ─── */
+  .hero { padding: 20px 16px 40px; }
 
-  .hero-eyebrow {
-    font-size: 10px; font-weight: 600; letter-spacing: 5px;
-    color: var(--gold); text-transform: uppercase; margin-bottom: 14px;
-    opacity: 0; animation: fadeup .9s .2s ease forwards;
+  .hero-card {
+    /* используем .card но без margin, задаём своим */
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 40px 24px 36px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: 0;
   }
+
+  .hero-medallion {
+    width: 100px; height: 100px; object-fit: contain;
+    margin-bottom: 20px;
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(0 6px 18px rgba(184,146,42,.2));
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+
+  /* ИСПРАВЛЕН шрифт — убрал letter-spacing -1px, поднял line-height */
   .hero-title {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 66px; font-weight: 900; line-height: .95;
-    color: var(--gold); letter-spacing: -1px; margin-bottom: 18px;
-    text-shadow: 0 2px 24px rgba(184,146,42,.15);
-    opacity: 0; animation: fadeup .9s .4s ease forwards;
+    font-size: 62px;
+    font-weight: 900;
+    line-height: 1.05;        /* было .95 — буквы перекрывались */
+    letter-spacing: 2px;      /* было -1px — убираю наезд букв */
+    color: var(--gold);
+    margin-bottom: 16px;
+    text-shadow: 0 2px 20px rgba(184,146,42,.12);
   }
   .hero-names {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 22px; font-weight: 700;
-    color: var(--text); margin-bottom: 28px;
-    opacity: 0; animation: fadeup .9s .6s ease forwards;
+    font-size: 21px; font-weight: 700;
+    color: var(--text);
   }
-  .hero-bdr {
-    width: 100%; height: 22px; object-fit: contain;
-    filter: sepia(0.6) saturate(1.5) brightness(0.95);
-    opacity: 0; animation: fadeup .9s .8s ease forwards;
-  }
-  @keyframes fadeup { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+  @keyframes fadeup { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
 
   /* ─── SECTION ─── */
-  .sec { padding: 40px 0; }
+  .sec { padding: 24px 0; }
   .sec-title {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 24px; font-weight: 700;
-    color: var(--gold); text-align: center; margin-bottom: 18px;
+    font-size: 22px; font-weight: 700;
+    color: var(--gold); text-align: center; margin-bottom: 14px;
   }
 
   /* ─── INVITATION ─── */
-  .inv-card { padding: 28px 22px; }
+  .inv-card { padding: 26px 22px; }
   .inv-lead {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 18px; font-weight: 700;
-    color: var(--gold); margin-bottom: 16px; line-height: 1.4;
+    font-size: 17px; font-weight: 700;
+    color: var(--gold); margin-bottom: 14px; line-height: 1.4;
   }
-  .inv-body { font-size: 15px; line-height: 1.9; color: var(--text); }
-  .inv-body p { margin-bottom: 12px; }
+  .inv-body { font-size: 15px; line-height: 1.85; color: var(--text); }
+  .inv-body p { margin-bottom: 10px; }
   .inv-body p:last-child { margin-bottom: 0; }
 
   /* ─── ILLUSTRATION ─── */
   .illus-wrap {
-    margin: 0 16px; border-radius: 20px;
-    overflow: hidden; box-shadow: 0 12px 40px rgba(42,26,0,.1);
+    margin: 0 16px; border-radius: 18px;
+    overflow: hidden; box-shadow: 0 10px 32px rgba(42,26,0,.1);
   }
   .illus-wrap img { width:100%; display:block; }
 
   /* ─── FAMILY ─── */
   .fam-card { padding: 22px; }
   .fam-grid { display: grid; grid-template-columns: 1fr 1fr; }
-  .fam-col { padding: 14px; }
+  .fam-col { padding: 12px; }
   .fam-col:first-child { border-right: 1px solid var(--glass-border); }
-  .fam-role {
-    font-size: 9px; font-weight: 600; letter-spacing: 2.5px;
-    text-transform: uppercase; color: var(--text-soft); margin-bottom: 10px;
-  }
-  .fam-name {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 20px; font-weight: 700; color: var(--gold); line-height: 1.45;
-  }
-  .fam-div { height: 1px; background: var(--glass-border); margin: 16px 0; }
-  .fam-quote {
-    font-size: 13px; font-style: italic;
-    color: var(--text-soft); text-align: center; line-height: 1.75;
-  }
+  .fam-role { font-size:9px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:var(--text-soft); margin-bottom:8px; }
+  .fam-name { font-family:'Playfair Display',Georgia,serif; font-size:19px; font-weight:700; color:var(--gold); line-height:1.45; }
+  .fam-div { height:1px; background:var(--glass-border); margin:14px 0; }
+  .fam-quote { font-size:13px; font-style:italic; color:var(--text-soft); text-align:center; line-height:1.75; }
 
   /* ─── DATE ─── */
-  .date-sec { padding: 56px 24px; text-align: center; position: relative; }
+  .date-sec { padding: 48px 24px; text-align: center; position: relative; }
   .date-sec::before {
     content:''; position:absolute; inset:0;
     background: radial-gradient(ellipse at 50% 40%, rgba(184,146,42,.07) 0%, transparent 65%);
     pointer-events: none;
   }
-  .date-num {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 112px; font-weight: 900; line-height: .95;
-    color: var(--gold); letter-spacing: -4px;
-    text-shadow: 0 4px 28px rgba(184,146,42,.15);
-  }
-  .date-month {
-    font-size: 17px; font-weight: 600; letter-spacing: 10px;
-    color: var(--gold); text-transform: uppercase; margin: 4px 0;
-  }
-  .date-year { font-size: 14px; letter-spacing: 6px; color: var(--gold-light); opacity:.8; margin-bottom: 20px; }
-  .date-time {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 58px; font-weight: 700; color: var(--text); letter-spacing: 2px;
-  }
-  .date-sub { font-size: 10px; font-weight: 500; letter-spacing: 3px; color: var(--text-soft); text-transform: uppercase; margin-top: 6px; }
+  .date-num { font-family:'Playfair Display',Georgia,serif; font-size:108px; font-weight:900; line-height:.95; color:var(--gold); letter-spacing:-3px; text-shadow:0 4px 28px rgba(184,146,42,.15); }
+  .date-month { font-size:16px; font-weight:600; letter-spacing:9px; color:var(--gold); text-transform:uppercase; margin:4px 0; }
+  .date-year { font-size:13px; letter-spacing:6px; color:var(--gold-light); opacity:.8; margin-bottom:18px; }
+  .date-time { font-family:'Playfair Display',Georgia,serif; font-size:56px; font-weight:700; color:var(--text); letter-spacing:2px; }
+  .date-sub { font-size:10px; font-weight:500; letter-spacing:3px; color:var(--text-soft); text-transform:uppercase; margin-top:6px; }
 
-  /* ─── COUNTDOWN ─── */
+  /* ─── COUNTDOWN — отдельные карточки как на 4-м скрине ─── */
   .cd-card { padding: 16px; }
   .cd-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .cd-block {
-    background: rgba(230,210,180,0.5);
+    background: rgba(220,195,155,0.55);   /* чуть насыщеннее фона = эффект стекла */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
-    border-radius: 18px; padding: 18px 10px; text-align: center;
+    border-radius: 16px; padding: 18px 10px; text-align: center;
   }
-  .cd-num {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 48px; font-weight: 900; color: var(--gold); line-height: 1; display: block;
-  }
-  .cd-lbl { font-size: 10px; font-weight: 500; letter-spacing: 2px; color: var(--text-soft); text-transform: uppercase; margin-top: 6px; }
-  .cd-num.flip { animation: flip .35s ease; }
+  .cd-num { font-family:'Playfair Display',Georgia,serif; font-size:46px; font-weight:900; color:var(--gold); line-height:1; display:block; }
+  .cd-lbl { font-size:10px; font-weight:500; letter-spacing:2px; color:var(--text-soft); text-transform:uppercase; margin-top:6px; }
+  .cd-num.flip { animation:flip .35s ease; }
   @keyframes flip { from{transform:translateY(-8px);opacity:.2} to{transform:none;opacity:1} }
 
   /* ─── CALENDAR ─── */
   .cal-card { padding: 18px 14px; }
-  .cal-hd {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 15px; font-weight: 700; color: var(--gold); text-align: center; letter-spacing: 3px; margin-bottom: 18px;
-  }
+  .cal-hd { font-family:'Playfair Display',Georgia,serif; font-size:15px; font-weight:700; color:var(--gold); text-align:center; letter-spacing:3px; margin-bottom:16px; }
   .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
-  .cal-dn { font-size: 9px; font-weight: 600; letter-spacing: 1px; color: var(--text-soft); text-align: center; padding: 4px 0 10px; text-transform: uppercase; }
-  .cal-d { aspect-ratio: 1; display:flex; align-items:center; justify-content:center; font-size: 13px; color: var(--text); border-radius: 50%; }
-  .cal-d.hi {
-    background: linear-gradient(135deg, var(--gold-light), var(--gold));
-    color: #fff; font-weight: 700;
-    font-family: 'Playfair Display', serif;
-    box-shadow: 0 4px 14px rgba(184,146,42,.3);
-  }
+  .cal-dn { font-size:9px; font-weight:600; letter-spacing:1px; color:var(--text-soft); text-align:center; padding:4px 0 10px; text-transform:uppercase; }
+  .cal-d { aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--text); border-radius:50%; }
+  .cal-d.hi { background:linear-gradient(135deg,var(--gold-light),var(--gold)); color:#fff; font-weight:700; font-family:'Playfair Display',serif; box-shadow:0 4px 14px rgba(184,146,42,.3); }
 
   /* ─── BUTTON ─── */
   .btn {
-    display: block; width: calc(100% - 32px); margin: 14px 16px 0; padding: 16px;
-    background: linear-gradient(135deg, var(--gold-light), var(--gold));
-    color: #fff; font-family: 'Montserrat', sans-serif;
-    font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    border: none; border-radius: 100px; cursor: pointer; text-align: center; text-decoration: none;
-    box-shadow: 0 6px 20px rgba(184,146,42,.22); transition: transform .2s;
+    display:block; width:calc(100% - 32px); margin:12px 16px 0; padding:15px;
+    background:linear-gradient(135deg,var(--gold-light),var(--gold));
+    color:#fff; font-family:'Montserrat',sans-serif;
+    font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    border:none; border-radius:100px; cursor:pointer; text-align:center; text-decoration:none;
+    box-shadow:0 6px 20px rgba(184,146,42,.22); transition:transform .2s;
   }
-  .btn:active { transform: scale(.97); }
+  .btn:active { transform:scale(.97); }
 
   /* ─── MAP ─── */
-  .map-wrap { margin: 0 16px; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 36px rgba(42,26,0,.08); }
+  .map-wrap { margin:0 16px; border-radius:18px; overflow:hidden; box-shadow:0 10px 32px rgba(42,26,0,.08); }
   .map-wrap img { width:100%; display:block; }
-  .map-addr { text-align: center; font-size: 14px; font-weight: 500; color: var(--text-soft); margin-top: 14px; letter-spacing: .5px; }
+  .map-addr { text-align:center; font-size:14px; font-weight:500; color:var(--text-soft); margin-top:12px; }
 
   /* ─── FOOTER ─── */
-  .footer { padding: 40px 24px 80px; text-align: center; }
-  .footer-bdr { width: 100%; height: 22px; object-fit: contain; margin-bottom: 20px; filter: sepia(0.6) saturate(1.5) brightness(0.95); }
-  .footer-txt { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-style: italic; color: var(--gold); }
+  .footer { padding:36px 24px 80px; text-align:center; }
+  .footer-bdr { width:100%; height:28px; object-fit:contain; margin-bottom:18px; filter:sepia(.6) saturate(1.5) brightness(.95); }
+  .footer-txt { font-family:'Playfair Display',Georgia,serif; font-size:20px; font-style:italic; color:var(--gold); }
 </style>
 </head>
 <body>
 
-<!-- ORNAMENT TOP — в потоке страницы, z-index: 0, контент поверх -->
+<!-- ORNAMENT TOP — большой, в потоке, z-index:0 -->
 <img class="top-orn" src="assets/ornament-border.png" alt="">
 
-<!-- MUSIC BUTTON -->
+<!-- MUSIC -->
 <button id="music-btn" aria-label="Музыка">
   <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>
   <span class="btn-label">Әуен</span>
 </button>
 
-<!-- HERO -->
+<!-- HERO — большой стеклянный блок -->
 <section class="hero">
-  <img class="hero-medallion" src="assets/ornament-top.png" alt="">
-  <p class="hero-eyebrow">Сізді шақырамыз</p>
-  <h1 class="hero-title">СҮНДЕТ<br>ТОЙ</h1>
-  <p class="hero-names">Нұрислам және Дінмұхамед</p>
-  <img class="hero-bdr" src="assets/ornament-border.png" alt="">
+  <div class="hero-card">
+    <img class="hero-medallion" src="assets/ornament-top.png" alt="">
+    <h1 class="hero-title">СҮНДЕТ<br>ТОЙ</h1>
+    <p class="hero-names">Нұрислам және Дінмұхамед</p>
+  </div>
 </section>
 
 <!-- INVITATION -->
@@ -283,7 +246,7 @@
 </section>
 
 <!-- ILLUSTRATION -->
-<section class="sec reveal" style="padding-top:0;">
+<section class="sec reveal" style="padding-top:8px;">
   <div class="illus-wrap">
     <img src="assets/illustration.webp" alt="Нұрислам және Дінмұхамед">
   </div>
@@ -347,7 +310,7 @@
     <img src="assets/map.png.jpg" alt="Карта">
   </div>
   <p class="map-addr">Qobyz Ballroom, Тараз</p>
-  <a href="https://2gis.kz/taraz/firm/70000001111844810/71.338587%2C42.899736" target="_blank" class="btn" style="margin-top:14px;">Ашу 2GIS</a>
+  <a href="https://2gis.kz/taraz/firm/70000001111844810/71.338587%2C42.899736" target="_blank" class="btn" style="margin-top:12px;">Ашу 2GIS</a>
 </section>
 
 <!-- FOOTER -->
@@ -357,12 +320,10 @@
 </footer>
 
 <script>
-// ── MUSIC ──
 const audio = new Audio('assets/music.mp3.mp3');
 audio.preload = 'metadata';
 let playing = false, started = false;
 const musicBtn = document.getElementById('music-btn');
-
 function tryPlay() {
   if (!started) {
     const seek = () => { audio.currentTime = 71; started = true; };
@@ -377,22 +338,18 @@ musicBtn.addEventListener('click', () => {
 });
 audio.addEventListener('pause', () => { playing = false; musicBtn.classList.remove('playing'); });
 
-// ── COUNTDOWN ──
 function tick() {
   const diff = new Date('2026-04-26T18:00:00+05:00') - new Date();
   if (diff <= 0) return;
-  const pad = n => String(n).padStart(2, '0');
-  [['d', Math.floor(diff/86400000)],
-   ['h', Math.floor(diff%86400000/3600000)],
-   ['m', Math.floor(diff%3600000/60000)],
-   ['s', Math.floor(diff%60000/1000)]].forEach(([k,v]) => {
+  const pad = n => String(n).padStart(2,'0');
+  [['d',Math.floor(diff/86400000)],['h',Math.floor(diff%86400000/3600000)],
+   ['m',Math.floor(diff%3600000/60000)],['s',Math.floor(diff%60000/1000)]].forEach(([k,v]) => {
     const el = document.getElementById('cd-'+k), s = pad(v);
-    if (el.textContent !== s) { el.textContent = s; el.classList.remove('flip'); void el.offsetWidth; el.classList.add('flip'); }
+    if (el.textContent !== s) { el.textContent=s; el.classList.remove('flip'); void el.offsetWidth; el.classList.add('flip'); }
   });
 }
 tick(); setInterval(tick, 1000);
 
-// ── CALENDAR ──
 (function(){
   const c = document.getElementById('cal');
   ['ДС','СС','СР','БС','ЖМ','СБ','ЖС'].forEach(d => {
@@ -404,23 +361,20 @@ tick(); setInterval(tick, 1000);
   }
 })();
 
-// ── ICS ──
 function dlICS(){
   const s=['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
     'SUMMARY:Сүндет той — Нұрислам және Дінмұхамед',
     'DTSTART:20260426T180000','DTEND:20260426T230000',
-    'LOCATION:Qobyz Ballroom\\, Тараз',
-    'DESCRIPTION:Сүндет той мерекесіне шақырамыз!',
+    'LOCATION:Qobyz Ballroom\\, Тараз','DESCRIPTION:Сүндет той!',
     'END:VEVENT','END:VCALENDAR'].join('\r\n');
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([s],{type:'text/calendar'}));
   a.download='sundettoy.ics'; a.click();
 }
 
-// ── REVEAL ──
 document.querySelectorAll('.reveal').forEach(el =>
-  new IntersectionObserver(entries=>{
-    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
   },{threshold:.1}).observe(el)
 );
 </script>
