@@ -1,11 +1,10 @@
-:root {
+﻿:root {
   --bg: #fcefd4;
   --gold: #c9a84c;
-  --gold-light: #e8c96a;
   --text-dark: #2c1a00;
-  --text-muted: rgba(44, 26, 0, 0.6);
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --radius: 24px;
+  --text-muted: rgba(44, 26, 0, 0.65);
+  --glass: rgba(255, 255, 255, 0.5);
+  --glass-border: rgba(201, 168, 76, 0.25);
 }
 
 * {
@@ -35,63 +34,74 @@ main {
   padding: 40px 16px;
 }
 
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .hero {
-  min-height: 100svh;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: center;
-  padding: 0 0 40px;
+  gap: 32px;
 }
 
 .ornament-top {
   width: 100%;
-  display: block;
+  max-height: 160px;
   object-fit: cover;
+  display: block;
+  border-radius: 24px;
 }
 
 .hero-content {
-  width: 100%;
-  padding: 24px 16px 0;
   display: flex;
   flex-direction: column;
+  gap: 18px;
   align-items: center;
-  gap: 20px;
 }
 
-.hero h1 {
+.hero-title {
   font-family: "Playfair Display", serif;
   font-weight: 900;
-  font-size: 48px;
+  font-size: 52px;
   line-height: 1;
   color: var(--gold);
-  letter-spacing: 4px;
+  letter-spacing: 3px;
+  animation: heroFade 1s ease both;
 }
 
 .hero-names {
   font-family: "Cormorant Garamond", serif;
-  font-size: 28px;
   font-style: italic;
   font-weight: 700;
+  font-size: 26px;
   color: var(--text-dark);
 }
 
-.ornament-divider {
-  width: min(100%, 340px);
+.ornament-border {
+  width: 100%;
+  height: 32px;
+  object-fit: contain;
   display: block;
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(201, 168, 76, 0.3);
-  border-radius: var(--radius);
-}
-
 .invitation-card {
-  padding: 40px 24px;
+  padding: 32px 24px;
   display: grid;
   gap: 12px;
 }
@@ -101,56 +111,43 @@ main {
   line-height: 1.6;
 }
 
-.illustration-section {
-  padding: 40px 0;
-}
-
 .illustration {
   width: calc(100% - 32px);
   margin: 0 16px;
-  border-radius: var(--radius);
+  border-radius: 24px;
   display: block;
 }
 
-.illustration-caption {
-  margin-top: 14px;
-  text-align: center;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 14px;
-  font-style: italic;
-  color: var(--gold);
-}
-
 .section-title {
-  margin-bottom: 16px;
-  text-align: center;
   font-family: "Playfair Display", serif;
-  font-size: 24px;
+  font-size: 28px;
   color: var(--gold);
+  text-align: center;
+  margin-bottom: 16px;
 }
 
 .hosts-card {
-  padding: 28px 16px 22px;
+  padding: 24px;
 }
 
 .hosts-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  text-align: center;
+  gap: 12px;
 }
 
 .host-col {
-  padding: 12px 8px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 18px;
+  padding: 14px 10px;
+  text-align: center;
 }
 
 .host-label {
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
   font-size: 12px;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   color: var(--text-muted);
 }
 
@@ -158,14 +155,8 @@ main {
   margin-top: 10px;
   font-family: "Cormorant Garamond", serif;
   font-weight: 700;
-  font-size: 20px;
-  line-height: 1;
-}
-
-.hosts-thanks {
-  margin-top: 18px;
-  text-align: center;
-  line-height: 1.6;
+  font-size: 22px;
+  line-height: 1.1;
 }
 
 .date-section {
@@ -181,67 +172,68 @@ main {
 }
 
 .date-month {
-  margin-top: 6px;
-  font-size: 32px;
+  margin-top: 2px;
+  font-size: 28px;
   font-weight: 600;
+  letter-spacing: 8px;
   color: var(--gold);
-  letter-spacing: 6px;
 }
 
 .date-year {
   margin-top: 8px;
-  font-size: 28px;
-  font-weight: 400;
+  font-size: 24px;
   color: var(--gold);
 }
 
 .date-time {
-  margin-top: 10px;
+  margin-top: 8px;
   font-family: "Cormorant Garamond", serif;
   font-weight: 700;
-  font-size: 48px;
+  font-size: 56px;
   color: var(--text-dark);
 }
 
 .countdown-card {
-  padding: 26px 16px;
+  padding: 18px;
 }
 
 .countdown-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
 }
 
-.countdown-item {
-  min-height: 104px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.55);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+.countdown-block {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 20px;
   text-align: center;
-  padding: 10px 8px;
 }
 
-.countdown-value {
-  min-width: 28px;
-  min-height: 28px;
+.countdown-number {
+  display: inline-block;
   font-family: "Playfair Display", serif;
-  font-weight: 700;
-  font-size: 48px;
+  font-size: 56px;
+  color: #c9a84c;
   line-height: 1;
-  color: var(--gold);
+  transform-origin: center;
+}
+
+.countdown-number.flip {
+  animation: flipIn 0.45s ease;
 }
 
 .countdown-label {
   margin-top: 8px;
+  display: block;
   font-size: 12px;
+  color: var(--text-muted);
 }
 
 .calendar-card {
-  padding: 20px 14px;
+  padding: 18px 14px;
 }
 
 .calendar {
@@ -253,127 +245,125 @@ main {
 
 .calendar th {
   font-size: 12px;
+  font-weight: 600;
   color: var(--text-muted);
-  font-weight: 500;
 }
 
 .calendar td {
   width: calc(100% / 7);
-  height: 36px;
+  height: 34px;
   font-size: 15px;
 }
 
 .calendar-highlight {
   width: 30px;
   height: 30px;
-  margin: 0 auto;
   border-radius: 50%;
   background: var(--gold);
   color: #fff;
   display: inline-flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   font-weight: 600;
 }
 
-.cta-button {
+.gold-button {
   width: 100%;
   margin-top: 16px;
+  min-height: 52px;
   border: none;
-  border-radius: 100px;
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  border-radius: 999px;
+  background: var(--gold);
   color: var(--text-dark);
+  font-size: 16px;
+  font-weight: 600;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  min-height: 52px;
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(201, 168, 76, 0.3);
-}
-
-.cta-button:active {
-  transform: translateY(1px);
-}
-
-.map-section {
-  padding: 40px 0;
+  box-shadow: 0 8px 24px rgba(201, 168, 76, 0.35);
 }
 
 .map-image {
   width: calc(100% - 32px);
   margin: 0 16px;
-  border-radius: var(--radius);
+  border-radius: 24px;
   display: block;
 }
 
-.map-section .cta-button {
-  width: calc(100% - 32px);
-  margin: 16px 16px 0;
-}
-
-.address {
-  margin-top: 12px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 500;
-}
-
 .footer {
-  padding: 40px 16px 56px;
   text-align: center;
 }
 
-.footer .ornament-divider {
-  margin: 0 auto 16px;
+.footer-border {
+  margin-bottom: 14px;
 }
 
 .footer p {
   font-family: "Cormorant Garamond", serif;
-  font-size: 18px;
   font-style: italic;
+  font-size: 18px;
   color: var(--gold);
 }
 
-.music-button {
+.music-btn {
   position: fixed;
-  right: 16px;
-  bottom: 20px;
-  width: 56px;
-  height: 56px;
+  right: 20px;
+  bottom: 30px;
+  width: 60px;
+  height: 60px;
+  border: none;
   border-radius: 50%;
-  border: 0;
   background: var(--gold);
-  box-shadow: 0 10px 24px rgba(44, 26, 0, 0.25);
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.5);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
   z-index: 1000;
+  animation: pulse 2s infinite;
 }
 
-.music-button img {
+.music-btn img {
   width: 34px;
   height: 34px;
   object-fit: contain;
 }
 
-.music-button.is-playing {
-  background: var(--gold-light);
+.music-btn.playing {
+  transform: scale(1.04);
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 700ms ease, transform 700ms ease;
+@keyframes heroFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(201, 168, 76, 0);
+  }
+}
+
+@keyframes flipIn {
+  from {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotateX(0);
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -385,5 +375,11 @@ main {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .hero-title,
+  .countdown-number.flip,
+  .music-btn {
+    animation: none;
   }
 }

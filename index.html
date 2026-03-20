@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="kk">
   <head>
     <meta charset="UTF-8" />
@@ -13,19 +13,13 @@
   </head>
   <body>
     <main>
-      <section class="hero reveal">
-        <img
-          class="ornament-top"
-          src="assets/ornament-top.png"
-          alt="Қазақы өрнек"
-          loading="eager"
-          decoding="async"
-        />
+      <section class="section hero reveal">
+        <img class="ornament-top" src="assets/ornament-top.png" alt="Қазақ оюы" loading="eager" decoding="async" />
         <div class="hero-content">
-          <h1>СҮНДЕТ ТОЙ</h1>
+          <h1 class="hero-title">СҮНДЕТ ТОЙ</h1>
           <p class="hero-names">Нұрислам және Дінмұхамед</p>
           <img
-            class="ornament-divider"
+            class="ornament-border"
             src="assets/ornament-border.png"
             alt="Өрнек"
             loading="eager"
@@ -43,15 +37,14 @@
         </article>
       </section>
 
-      <section class="illustration-section reveal">
+      <section class="section reveal">
         <img
           class="illustration"
           src="assets/illustration.webp"
-          alt="Ат үстіндегі балалар"
+          alt="Ат мінген балалар"
           loading="lazy"
           decoding="async"
         />
-        <p class="illustration-caption">«Дәстүр жалғасы»</p>
       </section>
 
       <section class="section reveal">
@@ -67,36 +60,33 @@
               <p class="host-names">Жақсылық, Әсем</p>
             </div>
           </div>
-          <p class="hosts-thanks">
-            Отбасымыздың қуанышына ортақтасқандарыңызға алғысымыз шексіз.
-          </p>
         </article>
       </section>
 
       <section class="section date-section reveal">
-        <div class="date-day">26</div>
-        <div class="date-month">СӘУІР</div>
-        <div class="date-year">2026</div>
-        <div class="date-time">18:00</div>
+        <p class="date-day">26</p>
+        <p class="date-month">СӘУІР</p>
+        <p class="date-year">2026</p>
+        <p class="date-time">18:00</p>
       </section>
 
       <section class="section reveal">
         <article class="glass-card countdown-card">
           <div class="countdown-grid">
-            <div class="countdown-item">
-              <span class="countdown-value" id="days">0</span>
+            <div class="countdown-block">
+              <span class="countdown-number" id="days">0</span>
               <span class="countdown-label">күн</span>
             </div>
-            <div class="countdown-item">
-              <span class="countdown-value" id="hours">0</span>
+            <div class="countdown-block">
+              <span class="countdown-number" id="hours">0</span>
               <span class="countdown-label">сағат</span>
             </div>
-            <div class="countdown-item">
-              <span class="countdown-value" id="minutes">0</span>
+            <div class="countdown-block">
+              <span class="countdown-number" id="minutes">0</span>
               <span class="countdown-label">минут</span>
             </div>
-            <div class="countdown-item">
-              <span class="countdown-value" id="seconds">0</span>
+            <div class="countdown-block">
+              <span class="countdown-number" id="seconds">0</span>
               <span class="countdown-label">секунд</span>
             </div>
           </div>
@@ -106,7 +96,7 @@
       <section class="section reveal">
         <h2 class="section-title">СӘУІР 2026</h2>
         <article class="glass-card calendar-card">
-          <table class="calendar" aria-label="2026 жылдың сәуір айы">
+          <table class="calendar" aria-label="Сәуір 2026">
             <thead>
               <tr>
                 <th>ДС</th>
@@ -167,33 +157,29 @@
             </tbody>
           </table>
         </article>
-        <button class="cta-button" id="addToCalendar" type="button">Күнтізбеге қосу</button>
+        <button class="gold-button" id="addToCalendar" type="button">Күнтізбеге қосу</button>
       </section>
 
-      <section class="map-section reveal">
+      <section class="section reveal">
         <img class="map-image" src="assets/map.png.jpg" alt="2GIS карта" loading="lazy" decoding="async" />
         <a
-          class="cta-button"
+          class="gold-button"
           href="https://2gis.kz/taraz/firm/70000001111844810/71.338587%2C42.899736?m=71.338625%2C42.899499%2F18.82%2Fp%2F47.6%2Fr%2F-54.49&immersive=on"
           target="_blank"
           rel="noopener noreferrer"
           >Ашу 2GIS</a
         >
-        <p class="address">Qobyz Ballroom, Тараз</p>
       </section>
     </main>
 
-    <footer class="footer reveal">
-      <img class="ornament-divider" src="assets/ornament-border.png" alt="Өрнек" loading="lazy" decoding="async" />
+    <footer class="footer section reveal">
+      <img class="ornament-border footer-border" src="assets/ornament-border.png" alt="Өрнек" loading="lazy" decoding="async" />
       <p>Сізді көруге қуаныштымыз! 🤍</p>
     </footer>
 
-    <button class="music-button" id="musicToggle" type="button" aria-label="Музыканы қосу немесе тоқтату">
+    <button class="music-btn" id="musicBtn" type="button" aria-label="Музыканы қосу немесе тоқтату">
       <img src="assets/music-btn.png" alt="" aria-hidden="true" />
     </button>
-    <audio id="bgMusic" preload="metadata">
-      <source src="assets/music.mp3" type="audio/mpeg" />
-    </audio>
 
     <script src="script.js"></script>
   </body>

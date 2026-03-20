@@ -1,81 +1,112 @@
-const eventDate = new Date("2026-04-26T18:00:00");
-const countdownIds = ["days", "hours", "minutes", "seconds"];
+﻿const musicBtn = document.getElementById("musicBtn");
+const audio = new Audio("assets/music.mp3");
+let playing = false;
+let startedFrom71 = false;
+
+audio.preload = "metadata";
+
+async function startMusicFromNeededTime() {
+  if (!startedFrom71) {
+    if (audio.readyState >= 1) {
+      audio.currentTime = 71;
+      startedFrom71 = true;
+    } else {
+      await new Promise((resolve) => {
+        audio.addEventListener(
+          "loadedmetadata",
+          () => {
+            audio.currentTime = 71;
+            startedFrom71 = true;
+            resolve();
+          },
+          { once: true }
+        );
+      });
+    }
+  }
+
+  await audio.play();
+}
+
+if (musicBtn) {
+  musicBtn.addEventListener("click", () => {
+    if (!playing) {
+      startMusicFromNeededTime()
+        .then(() => {
+          playing = true;
+          musicBtn.classList.add("playing");
+          musicBtn.setAttribute("aria-pressed", "true");
+        })
+        .catch((error) => {
+          console.error("Музыка қосылмады:", error);
+        });
+    } else {
+      audio.pause();
+      playing = false;
+      musicBtn.classList.remove("playing");
+      musicBtn.setAttribute("aria-pressed", "false");
+    }
+  });
+
+  audio.addEventListener("pause", () => {
+    playing = false;
+    musicBtn.classList.remove("playing");
+    musicBtn.setAttribute("aria-pressed", "false");
+  });
+
+  audio.addEventListener("play", () => {
+    playing = true;
+    musicBtn.classList.add("playing");
+    musicBtn.setAttribute("aria-pressed", "true");
+  });
+}
+
+function getTimeLeft() {
+  const now = new Date();
+  const target = new Date("2026-04-26T18:00:00+05:00");
+  const diff = Math.max(target - now, 0);
+
+  return {
+    days: Math.floor(diff / 86400000),
+    hours: Math.floor((diff % 86400000) / 3600000),
+    minutes: Math.floor((diff % 3600000) / 60000),
+    seconds: Math.floor((diff % 60000) / 1000)
+  };
+}
+
+const countdownMap = {
+  days: document.getElementById("days"),
+  hours: document.getElementById("hours"),
+  minutes: document.getElementById("minutes"),
+  seconds: document.getElementById("seconds")
+};
+
+let prevSecond = null;
 
 function updateCountdown() {
-  const now = new Date();
-  const diff = eventDate.getTime() - now.getTime();
+  const timeLeft = getTimeLeft();
 
-  if (diff <= 0) {
-    countdownIds.forEach((id) => {
-      const node = document.getElementById(id);
-      if (node) node.textContent = "0";
-    });
-    return;
-  }
+  Object.entries(countdownMap).forEach(([key, node]) => {
+    if (!node) return;
+    node.textContent = String(timeLeft[key]);
 
-  const totalSeconds = Math.floor(diff / 1000);
-  const days = Math.floor(totalSeconds / 86400);
-  const hours = Math.floor((totalSeconds % 86400) / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-
-  const values = { days, hours, minutes, seconds };
-  countdownIds.forEach((id) => {
-    const node = document.getElementById(id);
-    if (node) node.textContent = String(values[id]);
-  });
-}
-
-const countdownTimer = setInterval(() => {
-  const now = new Date();
-  if (eventDate.getTime() - now.getTime() <= 0) {
-    clearInterval(countdownTimer);
-  }
-  updateCountdown();
-}, 1000);
-updateCountdown();
-
-const musicButton = document.getElementById("musicToggle");
-const bgMusic = document.getElementById("bgMusic");
-let hasMusicStarted = false;
-
-if (musicButton && bgMusic) {
-  musicButton.addEventListener("click", async () => {
-    if (bgMusic.paused) {
-      if (!hasMusicStarted) {
-        bgMusic.currentTime = 71;
-        hasMusicStarted = true;
-      }
-      try {
-        await bgMusic.play();
-        musicButton.classList.add("is-playing");
-        musicButton.setAttribute("aria-pressed", "true");
-      } catch (error) {
-        console.error("Музыка ойнатылмады:", error);
-      }
-      return;
+    if (key === "seconds" && prevSecond !== timeLeft.seconds) {
+      node.classList.remove("flip");
+      void node.offsetWidth;
+      node.classList.add("flip");
     }
-
-    bgMusic.pause();
-    musicButton.classList.remove("is-playing");
-    musicButton.setAttribute("aria-pressed", "false");
   });
 
-  bgMusic.addEventListener("pause", () => {
-    musicButton.classList.remove("is-playing");
-    musicButton.setAttribute("aria-pressed", "false");
-  });
-
-  bgMusic.addEventListener("play", () => {
-    musicButton.classList.add("is-playing");
-    musicButton.setAttribute("aria-pressed", "true");
-  });
+  prevSecond = timeLeft.seconds;
 }
 
-const calendarButton = document.getElementById("addToCalendar");
+updateCountdown();
+setInterval(updateCountdown, 1000);
 
-if (calendarButton) {
-  calendarButton.addEventListener("click", () => {
+const addToCalendarBtn = document.getElementById("addToCalendar");
+
+if (addToCalendarBtn) {
+  addToCalendarBtn.addEventListener("click", () => {
     const icsContent = [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
@@ -89,9 +120,7 @@ if (calendarButton) {
       "END:VCALENDAR"
     ].join("\r\n");
 
-    const blob = new Blob([icsContent], {
-      type: "text/calendar;charset=utf-8"
-    });
+    const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -103,21 +132,23 @@ if (calendarButton) {
   });
 }
 
-const revealNodes = document.querySelectorAll(".reveal");
+const revealItems = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver(
     (entries, obs) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add("visible");
+        entry.target.classList.add("is-visible");
         obs.unobserve(entry.target);
       });
     },
-    { threshold: 0.15 }
+    {
+      threshold: 0.16
+    }
   );
 
-  revealNodes.forEach((node) => observer.observe(node));
+  revealItems.forEach((item) => observer.observe(item));
 } else {
-  revealNodes.forEach((node) => node.classList.add("visible"));
+  revealItems.forEach((item) => item.classList.add("is-visible"));
 }
