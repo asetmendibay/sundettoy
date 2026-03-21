@@ -304,7 +304,7 @@
 <!-- DATE -->
 <section class="date-sec reveal">
   <div class="date-card">
-    <div class="date-num">26</div>
+    <div class="date-num">24</div>
     <div class="date-month">Сәуір</div>
     <div class="date-year">2 0 2 6</div>
     <div class="date-divider"></div>
@@ -371,7 +371,7 @@ audio.addEventListener('pause', () => { playing=false; mBtn.classList.remove('pl
 
 // ── COUNTDOWN ──
 function tick() {
-  const diff = new Date('2026-04-26T18:00:00+05:00') - new Date();
+  const diff = new Date('2026-04-24T18:00:00+05:00') - new Date();
   if (diff <= 0) return;
   const pad = n => String(n).padStart(2,'0');
   [['d',~~(diff/86400000)],['h',~~(diff%86400000/3600000)],
@@ -390,7 +390,7 @@ tick(); setInterval(tick,1000);
   });
   for(let i=0;i<2;i++) c.appendChild(document.createElement('div'));
   for(let d=1;d<=30;d++){
-    const el=document.createElement('div');el.className='cal-d'+(d===26?' hi':'');el.textContent=d;c.appendChild(el);
+    const el=document.createElement('div');el.className='cal-d'+(d===24?' hi':'');el.textContent=d;c.appendChild(el);
   }
 })();
 
@@ -398,7 +398,7 @@ tick(); setInterval(tick,1000);
 function dlICS(){
   const s=['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
     'SUMMARY:Сүндет той — Нұрислам және Дінмұхамед',
-    'DTSTART:20260426T180000','DTEND:20260426T230000',
+    'DTSTART:20260424T180000','DTEND:20260424T230000',
     'LOCATION:Qobyz Ballroom\\, Тараз','DESCRIPTION:Сүндет той!',
     'END:VEVENT','END:VCALENDAR'].join('\r\n');
   const a=document.createElement('a');
