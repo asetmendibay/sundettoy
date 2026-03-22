@@ -1,41 +1,41 @@
 ﻿(() => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const revealItems = document.querySelectorAll('.reveal');
+  const revealNodes = document.querySelectorAll('.reveal');
 
   if (prefersReducedMotion) {
-    revealItems.forEach((item) => item.classList.add('is-visible'));
+    revealNodes.forEach((node) => node.classList.add('is-visible'));
   } else {
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
+    const observer = new IntersectionObserver(
+      (entries, instance) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) {
             return;
           }
 
           entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+          instance.unobserve(entry.target);
         });
       },
       {
-        threshold: 0.16,
-        rootMargin: '0px 0px -8% 0px'
+        threshold: 0.2,
+        rootMargin: '0px 0px -10% 0px'
       }
     );
 
-    revealItems.forEach((item) => revealObserver.observe(item));
+    revealNodes.forEach((node) => observer.observe(node));
   }
 
-  const targetDate = new Date('2026-04-26T18:00:00+05:00').getTime();
+  const targetTs = new Date('2026-04-26T18:00:00+05:00').getTime();
   const dayEl = document.getElementById('days');
   const hourEl = document.getElementById('hours');
   const minuteEl = document.getElementById('minutes');
   const secondEl = document.getElementById('seconds');
 
-  const toPadded = (value) => String(value).padStart(2, '0');
+  const pad = (num) => String(num).padStart(2, '0');
 
-  const renderCountdown = () => {
-    const diff = targetDate - Date.now();
+  const tick = () => {
+    const diff = targetTs - Date.now();
 
     if (diff <= 0) {
       dayEl.textContent = '00';
@@ -50,59 +50,59 @@
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
-    dayEl.textContent = toPadded(days);
-    hourEl.textContent = toPadded(hours);
-    minuteEl.textContent = toPadded(minutes);
-    secondEl.textContent = toPadded(seconds);
+    dayEl.textContent = pad(days);
+    hourEl.textContent = pad(hours);
+    minuteEl.textContent = pad(minutes);
+    secondEl.textContent = pad(seconds);
   };
 
-  renderCountdown();
-  window.setInterval(renderCountdown, 1000);
+  tick();
+  window.setInterval(tick, 1000);
 
-  const musicButton = document.getElementById('musicToggle');
-  const backgroundMusic = document.getElementById('bgMusic');
-  const musicStartSecond = 71;
-  let startOffsetApplied = false;
+  const musicBtn = document.getElementById('musicToggle');
+  const music = document.getElementById('bgMusic');
+  const START_SECOND = 71;
+  let isOffsetApplied = false;
 
-  const setButtonState = () => {
-    const isPlaying = !backgroundMusic.paused;
-    musicButton.classList.toggle('playing', isPlaying);
-    musicButton.setAttribute('aria-pressed', String(isPlaying));
+  const updateMusicUI = () => {
+    const playing = !music.paused;
+    musicBtn.classList.toggle('playing', playing);
+    musicBtn.setAttribute('aria-pressed', String(playing));
   };
 
-  const setStartOffset = () => {
-    if (startOffsetApplied) {
+  const applyOffsetOnce = () => {
+    if (isOffsetApplied) {
       return;
     }
 
-    if (Number.isFinite(backgroundMusic.duration) && backgroundMusic.duration > musicStartSecond) {
-      backgroundMusic.currentTime = musicStartSecond;
+    if (Number.isFinite(music.duration) && music.duration > START_SECOND) {
+      music.currentTime = START_SECOND;
     } else {
-      backgroundMusic.currentTime = 0;
+      music.currentTime = 0;
     }
 
-    startOffsetApplied = true;
+    isOffsetApplied = true;
   };
 
-  musicButton.addEventListener('click', async () => {
-    if (backgroundMusic.paused) {
-      setStartOffset();
+  musicBtn.addEventListener('click', async () => {
+    if (music.paused) {
+      applyOffsetOnce();
 
       try {
-        await backgroundMusic.play();
+        await music.play();
       } catch (_error) {
         return;
       }
     } else {
-      backgroundMusic.pause();
+      music.pause();
     }
 
-    setButtonState();
+    updateMusicUI();
   });
 
-  backgroundMusic.addEventListener('loadedmetadata', setStartOffset);
-  backgroundMusic.addEventListener('play', setButtonState);
-  backgroundMusic.addEventListener('pause', setButtonState);
+  music.addEventListener('loadedmetadata', applyOffsetOnce);
+  music.addEventListener('play', updateMusicUI);
+  music.addEventListener('pause', updateMusicUI);
 
-  setButtonState();
+  updateMusicUI();
 })();

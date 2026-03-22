@@ -11,76 +11,79 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="page" aria-label="Сүндет той шақыру парағы">
-    <section class="section hero reveal">
-      <p class="hero-label">Шақыру</p>
+  <div class="aurora aurora-one" aria-hidden="true"></div>
+  <div class="aurora aurora-two" aria-hidden="true"></div>
+
+  <main class="mobile-wrap" aria-label="Сүндет той шақыру парағы">
+    <section class="hero reveal">
+      <p class="hero-chip">Шақыру</p>
       <h1>СҮНДЕТ ТОЙ</h1>
       <p class="hero-names">НҰРИСЛАМ және ДІНМҰХАМЕД</p>
       <p class="hero-date">26 СӘУІР 2026 • 18:00</p>
     </section>
 
-    <section class="section reveal">
+    <section class="panel reveal">
       <h2>Құрметті ағайын-туыс, бауырлар!</h2>
-      <article class="invite-card">
+      <div class="copy-block">
         <p>Перзенттеріміз Нұрислам мен Дінмұхамедтің сүндет тойына сіздерді шын жүректен шақырамыз.</p>
         <p>Бұл қуанышты сәтті бізбен бірге бөлісіп, ақ дастарханымыздың қадірлі қонағы болуыңызды сұраймыз.</p>
         <p>Келуіңізді асыға күтеміз!</p>
-      </article>
+      </div>
     </section>
 
-    <section class="section illustration-section reveal">
+    <section class="panel image-panel reveal">
       <img src="assets/illustration.png" alt="Нұрислам мен Дінмұхамед">
     </section>
 
-    <section class="section reveal">
+    <section class="panel reveal">
       <h2>ТОЙ ИЕЛЕРІ</h2>
-      <div class="owners-card">
-        <p class="owners-title">Ата-әжелері:</p>
-        <p class="owners-name">АСҚАТ – РИНА</p>
-        <p class="owners-title">Әкесі-анасы:</p>
-        <p class="owners-name">ЖАҚСЫЛЫҚ – ӘСЕМ</p>
+      <div class="hosts-box">
+        <p class="hosts-label">Ата-әжелері:</p>
+        <p class="hosts-value">АСҚАТ – РИНА</p>
+        <p class="hosts-label">Әкесі-анасы:</p>
+        <p class="hosts-value">ЖАҚСЫЛЫҚ – ӘСЕМ</p>
       </div>
     </section>
 
-    <section class="section date-block reveal">
+    <section class="panel reveal">
       <h2>Сізді күтеміз</h2>
-      <p class="date-main">26 СӘУІР 2026</p>
-      <p class="date-time">Сағат 18:00-де</p>
+      <div class="date-spotlight">
+        <p class="date-line">26 СӘУІР 2026</p>
+        <p class="time-line">Сағат 18:00-де</p>
+      </div>
     </section>
 
-    <section class="section reveal">
+    <section class="panel reveal">
       <h2>Тойға дейін қалды:</h2>
       <div class="timer-grid" role="timer" aria-live="polite">
-        <article class="timer-card">
-          <p id="days" class="timer-value">00</p>
-          <p class="timer-label">КҮН</p>
+        <article class="timer-item">
+          <p id="days" class="timer-number">00</p>
+          <p class="timer-unit">КҮН</p>
         </article>
-        <article class="timer-card">
-          <p id="hours" class="timer-value">00</p>
-          <p class="timer-label">САҒАТ</p>
+        <article class="timer-item">
+          <p id="hours" class="timer-number">00</p>
+          <p class="timer-unit">САҒАТ</p>
         </article>
-        <article class="timer-card">
-          <p id="minutes" class="timer-value">00</p>
-          <p class="timer-label">МИНУТ</p>
+        <article class="timer-item">
+          <p id="minutes" class="timer-number">00</p>
+          <p class="timer-unit">МИНУТ</p>
         </article>
-        <article class="timer-card">
-          <p id="seconds" class="timer-value">00</p>
-          <p class="timer-label">СЕКУНД</p>
+        <article class="timer-item">
+          <p id="seconds" class="timer-number">00</p>
+          <p class="timer-unit">СЕКУНД</p>
         </article>
       </div>
     </section>
 
-    <section class="section reveal">
+    <section class="panel reveal">
       <h2>ӨТКІЗІЛЕТІН ОРЫН</h2>
       <p class="location-city">Тараз қаласы</p>
       <p class="location-place">Qobyz Ballroom</p>
-      <div class="map-placeholder" aria-hidden="true">
-        <span>Карта стилі кейін қосылады</span>
-      </div>
-      <a class="route-btn" href="https://2gis.kz/taraz/firm/70000001111844810" target="_blank" rel="noopener noreferrer">Жолды ашу →</a>
+      <div class="map-placeholder" aria-hidden="true">Карта кейін қосылады</div>
+      <a class="primary-btn" href="https://2gis.kz/taraz/firm/70000001111844810" target="_blank" rel="noopener noreferrer">Жолды ашу →</a>
     </section>
 
-    <section class="section reveal">
+    <section class="panel reveal">
       <h2>ҚАТЫСУЫҢЫЗДЫ РАСТАҢЫЗ</h2>
       <div class="rsvp-placeholder" role="status" aria-live="polite">
         <p>Жақында ашылады...</p>
@@ -95,7 +98,7 @@
   </main>
 
   <button class="music-toggle" id="musicToggle" type="button" aria-label="Музыканы қосу немесе тоқтату" aria-pressed="false">
-    <span class="music-icon" aria-hidden="true"></span>
+    <img src="assets/music-btn.png" alt="" aria-hidden="true">
   </button>
 
   <audio id="bgMusic" preload="metadata" loop src="assets/music.mp3"></audio>
