@@ -26,7 +26,7 @@
     revealNodes.forEach((node) => observer.observe(node));
   }
 
-  const targetTs = new Date('2026-04-26T18:00:00+05:00').getTime();
+  const targetTs = new Date('2026-04-24T18:00:00+05:00').getTime();
   const dayEl = document.getElementById('days');
   const hourEl = document.getElementById('hours');
   const minuteEl = document.getElementById('minutes');
