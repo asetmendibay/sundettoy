@@ -187,12 +187,17 @@ h2 {
   padding: 8px;
 }
 
-.image-panel img {
+.image-panel img,
+.image-panel video {
   width: 100%;
   display: block;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(35, 59, 94, 0.2);
   box-shadow: 0 12px 22px rgba(35, 59, 94, 0.12);
+}
+
+.image-panel video {
+  background: #000;
 }
 
 .hosts-box {
