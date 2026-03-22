@@ -228,22 +228,14 @@ h2 {
   margin-bottom: 0;
 }
 
+.hosts-value--single {
+  margin: 0;
+}
+
 .hosts-box--placeholder {
   border-style: dashed;
   border-color: rgba(35, 59, 94, 0.24);
   background: #ffffff;
-}
-
-.hosts-placeholder {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.5;
-  font-style: italic;
-  color: var(--text-muted);
-}
-
-.hosts-placeholder + .hosts-placeholder {
-  margin-top: 4px;
 }
 
 .date-spotlight {
