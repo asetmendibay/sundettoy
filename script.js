@@ -2,6 +2,18 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const revealNodes = document.querySelectorAll('.reveal');
+  const heroEvents = document.querySelectorAll('.hero-event');
+
+  if (!prefersReducedMotion) {
+    revealNodes.forEach((node, index) => {
+      const delay = Math.min(index * 80, 420);
+      node.style.transitionDelay = `${delay}ms`;
+    });
+
+    heroEvents.forEach((eventNode, index) => {
+      eventNode.style.animationDelay = `${index * 0.85}s`;
+    });
+  }
 
   if (prefersReducedMotion) {
     revealNodes.forEach((node) => node.classList.add('is-visible'));
@@ -34,14 +46,34 @@
 
   const pad = (num) => String(num).padStart(2, '0');
 
+  const setTimerValue = (element, nextValue) => {
+    if (!element) {
+      return;
+    }
+
+    if (element.textContent === nextValue) {
+      return;
+    }
+
+    element.textContent = nextValue;
+
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    element.classList.remove('tick');
+    void element.offsetWidth;
+    element.classList.add('tick');
+  };
+
   const tick = () => {
     const diff = targetTs - Date.now();
 
     if (diff <= 0) {
-      dayEl.textContent = '00';
-      hourEl.textContent = '00';
-      minuteEl.textContent = '00';
-      secondEl.textContent = '00';
+      setTimerValue(dayEl, '00');
+      setTimerValue(hourEl, '00');
+      setTimerValue(minuteEl, '00');
+      setTimerValue(secondEl, '00');
       return;
     }
 
@@ -50,10 +82,10 @@
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
-    dayEl.textContent = pad(days);
-    hourEl.textContent = pad(hours);
-    minuteEl.textContent = pad(minutes);
-    secondEl.textContent = pad(seconds);
+    setTimerValue(dayEl, pad(days));
+    setTimerValue(hourEl, pad(hours));
+    setTimerValue(minuteEl, pad(minutes));
+    setTimerValue(secondEl, pad(seconds));
   };
 
   tick();
