@@ -1,0 +1,112 @@
+﻿<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>СҮНДЕТ ТОЙ | НҰРИСЛАМ & ДІНМҰХАМЕД</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <img class="ornament-top" src="assets/ornament-top.png" alt="" aria-hidden="true">
+
+  <main class="page" aria-label="Сүндет той шақыру сайты">
+    <section class="section hero" data-reveal>
+      <p class="eyebrow">Салтанатты шақыру</p>
+      <h1>СҮНДЕТ ТОЙ</h1>
+      <p class="hero-names">НҰРИСЛАМ <span>&</span> ДІНМҰХАМЕД</p>
+      <p class="hero-date">26.04.2026</p>
+    </section>
+
+    <section class="section" data-reveal>
+      <h2>Құрметті қонақтар!</h2>
+      <article class="invite-card">
+        <p>
+          Сіздерді ұлдарымыз НҰРИСЛАМ мен ДІНМҰХАМЕДТІҢ
+          сүндет тойына арналған ақ дастарханымыздың қадірлі қонағы болуға шын жүректен шақырамыз.
+        </p>
+      </article>
+    </section>
+
+    <section class="section" data-reveal>
+      <img class="illustration" src="assets/illustration.png" alt="Нұрислам мен Дінмұхамедтің иллюстрациясы">
+    </section>
+
+    <section class="section" data-reveal>
+      <h2>Той иелері</h2>
+      <div class="owners-card">
+        <p class="owners-line">Ата-әжелері: АСҚАТ – РИНА</p>
+        <p class="owners-line">Әкесі-анасы: ЖАҚСЫЛЫҚ – ӘСЕМ</p>
+      </div>
+    </section>
+
+    <section class="section date-section" data-reveal>
+      <h2>Той күні</h2>
+      <div class="date-grid" aria-label="Той күні мен уақыты">
+        <div class="date-cell">26</div>
+        <div class="date-cell">СӘУІР</div>
+        <div class="date-cell">2026</div>
+        <div class="date-cell">18:00</div>
+      </div>
+    </section>
+
+    <section class="section" data-reveal>
+      <h2>Басталуына қалды</h2>
+      <div class="timer-grid" role="timer" aria-live="polite">
+        <article class="timer-card">
+          <p id="days" class="timer-value">00</p>
+          <p class="timer-label">КҮН</p>
+        </article>
+        <article class="timer-card">
+          <p id="hours" class="timer-value">00</p>
+          <p class="timer-label">САҒАТ</p>
+        </article>
+        <article class="timer-card">
+          <p id="minutes" class="timer-value">00</p>
+          <p class="timer-label">МИНУТ</p>
+        </article>
+        <article class="timer-card">
+          <p id="seconds" class="timer-value">00</p>
+          <p class="timer-label">СЕКУНД</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" data-reveal>
+      <h2>Галерея</h2>
+      <div class="gallery-placeholder" aria-label="Галереяның уақытша көрінісі">
+        <img src="assets/illustration.png" alt="Галерея фотосы">
+      </div>
+    </section>
+
+    <section class="section" data-reveal>
+      <h2>Локация</h2>
+      <p class="location-address">Тараз, Qobyz Ballroom</p>
+      <div class="map-card">
+        <img src="assets/Frame 7 (2).png" alt="Qobyz Ballroom-ға дейінгі карта">
+      </div>
+      <a class="map-btn" href="https://2gis.kz/taraz/firm/70000001111844810" target="_blank" rel="noopener noreferrer">Ашу 2GIS</a>
+    </section>
+
+    <section class="section" data-reveal>
+      <h2>RSVP</h2>
+      <div class="rsvp-placeholder" role="status" aria-live="polite">Жақында...</div>
+    </section>
+
+    <footer class="footer section" data-reveal>
+      <img src="assets/ornament-border.png" alt="" aria-hidden="true">
+      <p>Сізді көруге қуаныштымыз! 🤍</p>
+    </footer>
+  </main>
+
+  <button id="musicToggle" class="music-toggle" type="button" aria-label="Музыканы қосу/өшіру" aria-pressed="false">
+    <img src="assets/music-btn.png" alt="" aria-hidden="true">
+  </button>
+
+  <audio id="bgMusic" loop preload="metadata" src="assets/music.mp3"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
